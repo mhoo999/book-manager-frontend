@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -65,8 +66,46 @@ const Notice = styled.article`
     }
   }
 `
+const NoticeItem = ({ id, title, regdate }) => {
+  return (
+    <li>
+      <Link to={id}>
+        {title}
+        <span className="text-gray">{regdate}</span>
+      </Link>
+    </li>
+  )
+}
 
 const Content = () => {
+  const [notice, setNotice] = useState({ data: [] })
+  useEffect(() => {
+    setNotice({
+      data: [
+        {
+          id: 1,
+          title: '📢 7월 신간 도서 입고 안내 (총 150종)',
+          regdate: '2025-06-25',
+        },
+        {
+          id: 2,
+          title: '🎁 여름방학 독서 이벤트 참가자 모집 (~6/30)',
+          regdate: '2025-06-22',
+        },
+        {
+          id: 3,
+          title: '🕐 대여 연장 정책 변경 안내 (1회 → 2회)',
+          regdate: '2025-06-18',
+        },
+        {
+          id: 4,
+          title: '🚚 도서 반납 지연 시 패널티 정책 신설',
+          regdate: '2025-06-15',
+        },
+      ],
+    })
+  }, [])
+
   return (
     <Section>
       <Service>
@@ -85,30 +124,14 @@ const Content = () => {
       <Notice>
         <h3>공지사항</h3>
         <ul>
-          <li>
-            <Link to={''}>
-              📢 7월 신간 도서 입고 안내 (총 150종)
-              <span className="text-gray">2025-06-25</span>
-            </Link>
-          </li>
-          <li>
-            <Link to={''}>
-              🎁 여름방학 독서 이벤트 참가자 모집 (~6/30)
-              <span className="text-gray">2025-06-22</span>
-            </Link>
-          </li>
-          <li>
-            <Link to={''}>
-              🕐 대여 연장 정책 변경 안내 (1회 → 2회)
-              <span className="text-gray">2025-06-18</span>
-            </Link>
-          </li>
-          <li>
-            <Link to={''}>
-              🚚 도서 반납 지연 시 패널티 정책 신설
-              <span className="text-gray">2025-06-15</span>
-            </Link>
-          </li>
+          {notice.data.map((n) => (
+            <NoticeItem
+              key={n.id}
+              id={n.id}
+              title={n.title}
+              regdate={n.regdate}
+            />
+          ))}
         </ul>
       </Notice>
     </Section>

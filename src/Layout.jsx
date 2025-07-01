@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { Outlet } from 'react-router-dom'
 import Footer from './components/Footer'
 import Header from './components/Header'
+import GlobalStyle from './components/GlobalStyle'
 
 const Wrapper = styled.div`
   background-color: white;
@@ -11,13 +12,16 @@ const Wrapper = styled.div`
 // 공통 레이아웃 컴포넌트
 const Layout = () => {
   return (
-    <Wrapper>
-      <Header />
-      <main>
-        <Outlet />
-      </main>
-      <Footer />
-    </Wrapper>
+    <>
+      <GlobalStyle />
+      <Wrapper>
+        <Header />
+        <main>
+          <Outlet />
+        </main>
+        <Footer />
+      </Wrapper>
+    </>
   )
 }
 

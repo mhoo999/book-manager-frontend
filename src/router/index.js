@@ -1,6 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom'
 import { lazy } from 'react'
 import Layout from '../Layout'
+
+//Suspense 와 lazy를 이용한 Code-Splitting
 const ErrorPage = lazy(() => import('../pages/ErrorPage'))
 const Home = lazy(() => import('../pages/Home'))
 const SearchBook = lazy(() => import('../pages/SearchBook'))

@@ -1,4 +1,7 @@
-import styled from 'styled-components'
+import { useEffect, useRef, useState } from 'react'
+import styled, { css } from 'styled-components'
+import useInputs from '../../hooks/useInputs'
+import Modal from '../../components/Modal'
 
 const SearchContainer = styled.section`
   > h2 {
@@ -47,20 +50,66 @@ const SearchContainer = styled.section`
 `
 
 const Search = () => {
+  const [form, onChange, reset] = useInputs({
+    searchType: 'title',
+    keyword: '',
+  })
+
+  const { searchType, keyword } = form
+
+  useEffect(() => {
+    //React는 상태를 비동기적으로 처리하기 때문에 로그확인은 useEffect에서 하는게 정확하다.
+    console.log('form =', form)
+  }, [form])
+
+  const keywordRef = useRef()
+  const [isOpen, setIsOpen] = useState(false) //모달창 열고 닫는 변수
+
+  const clseModalFn = () => {
+    setIsOpen(false)
+    keywordRef.current.focus()
+  }
+
+  const searchFn = (e) => {
+    if (!keyword) {
+      // alert('검색어가 입력되지 않았습니다.')
+      setIsOpen(true) //모달창 열기
+
+      e.preventDefault()
+      keywordRef.current.focus()
+      return
+    }
+
+    reset()
+  }
+
   return (
-    <SearchContainer>
-      <h2>🔍 도서 검색</h2>
-      <div className="card">
-        <form>
-          <select>
-            <option>도서명</option>
-            <option>저자명</option>
-          </select>
-          <input type="text" placeholder="검색어를 입력하세요" />
-          <button type="submit">확인</button>
-        </form>
-      </div>
-    </SearchContainer>
+    <>
+      <Modal isOpen={isOpen} clseModalFn={clseModalFn} title="입력오류">
+        검색어가 입력되지 않았습니다.
+      </Modal>
+      <SearchContainer>
+        <h2>🔍 도서 검색</h2>
+        <div className="card">
+          <form>
+            <select name="searchType" onChange={onChange} value={searchType}>
+              <option value="title">도서명</option>
+              <option value="author">저자명</option>
+            </select>
+            <input
+              type="text"
+              name="keyword"
+              value={keyword}
+              placeholder="검색어를 입력하세요"
+              onChange={onChange}
+              ref={keywordRef}
+              autoComplete="off"
+            />
+            <button onClick={searchFn}>확인</button>
+          </form>
+        </div>
+      </SearchContainer>
+    </>
   )
 }
 
