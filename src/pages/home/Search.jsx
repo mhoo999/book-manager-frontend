@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import useInputs from '../../hooks/useInputs'
 import Modal from '../../components/Modal'
 
@@ -51,11 +51,11 @@ const SearchContainer = styled.section`
 
 const Search = () => {
   const [form, onChange, reset] = useInputs({
-    searchType: 'title',
+    type: 'title',
     keyword: '',
   })
 
-  const { searchType, keyword } = form
+  const { type, keyword } = form
 
   useEffect(() => {
     //React는 상태를 비동기적으로 처리하기 때문에 로그확인은 useEffect에서 하는게 정확하다.
@@ -92,7 +92,7 @@ const Search = () => {
         <h2>🔍 도서 검색</h2>
         <div className="card">
           <form>
-            <select name="searchType" onChange={onChange} value={searchType}>
+            <select name="type" onChange={onChange} value={type}>
               <option value="title">도서명</option>
               <option value="author">저자명</option>
             </select>
