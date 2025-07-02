@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import useInputs from '../../hooks/useInputs'
 import Modal from '../../components/Modal'
+import { createSearchParams, useNavigate } from 'react-router-dom'
 
 const SearchContainer = styled.section`
   > h2 {
@@ -50,6 +51,7 @@ const SearchContainer = styled.section`
 `
 
 const Search = () => {
+  const navigate = useNavigate()
   const [form, onChange, reset] = useInputs({
     type: 'title',
     keyword: '',
@@ -59,7 +61,7 @@ const Search = () => {
 
   useEffect(() => {
     //React는 상태를 비동기적으로 처리하기 때문에 로그확인은 useEffect에서 하는게 정확하다.
-    console.log('form =', form)
+    //console.log('form =', form)
   }, [form])
 
   const keywordRef = useRef()
@@ -70,15 +72,19 @@ const Search = () => {
     keywordRef.current.focus()
   }
 
-  const searchFn = (e) => {
-    if (!keyword) {
+  const onSubmit = (e) => {
+    e.preventDefault()
+    if (!keyword.trim()) {
       // alert('검색어가 입력되지 않았습니다.')
       setIsOpen(true) //모달창 열기
 
-      e.preventDefault()
       keywordRef.current.focus()
       return
     }
+
+    const queryString = createSearchParams({ type, keyword }).toString()
+    console.log(`queryString = ${queryString}`)
+    navigate(`/searchbook?${queryString}`)
 
     reset()
   }
@@ -91,7 +97,7 @@ const Search = () => {
       <SearchContainer>
         <h2>🔍 도서 검색</h2>
         <div className="card">
-          <form>
+          <form onSubmit={onSubmit}>
             <select name="type" onChange={onChange} value={type}>
               <option value="title">도서명</option>
               <option value="author">저자명</option>
@@ -105,7 +111,7 @@ const Search = () => {
               ref={keywordRef}
               autoComplete="off"
             />
-            <button onClick={searchFn}>확인</button>
+            <button>검색</button>
           </form>
         </div>
       </SearchContainer>
