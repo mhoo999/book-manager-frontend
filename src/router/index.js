@@ -1,16 +1,18 @@
 import { createBrowserRouter } from 'react-router-dom'
 import { lazy } from 'react'
-import Layout from '../Layout'
 
-//Suspense 와 lazy를 이용한 Code-Splitting
+import searchRouter from './searchRouter'
+import Layout from '../layout/Layout'
+
+//Suspense와 lazy를 이용한 Code-Splitting
 const ErrorPage = lazy(() => import('../pages/ErrorPage'))
-const Home = lazy(() => import('../pages/Home'))
-const SearchBook = lazy(() => import('../pages/SearchBook'))
-const RentalState = lazy(() => import('../pages/RentalState'))
-const WishBook = lazy(() => import('../pages/WishBook'))
-const CSCenter = lazy(() => import('../pages/CSCenter'))
-const MyPage = lazy(() => import('../pages/MyPage'))
-const Login = lazy(() => import('../pages/Login'))
+const Home = lazy(() => import('../pages/home/IndexPage'))
+const IndexPage = lazy(() => import('../pages/book/IndexPage'))
+const RentalState = lazy(() => import('../pages/rental/IndexPage'))
+const WishBook = lazy(() => import('../pages/wish/IndexPage'))
+const CsCenter = lazy(() => import('../pages/cscenter/IndexPage'))
+const MyPage = lazy(() => import('../pages/mypage/IndexPage'))
+const Login = lazy(() => import('../pages/login/Login'))
 const NotFound = lazy(() => import('../pages/NotFound'))
 
 /*
@@ -24,7 +26,7 @@ const NotFound = lazy(() => import('../pages/NotFound'))
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '',
     element: <Layout />,
     errorElement: <ErrorPage />,
     children: [
@@ -33,8 +35,9 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: '/searchbook',
-        element: <SearchBook />,
+        path: '/book',
+        element: <IndexPage />,
+        children: searchRouter(),
       },
       {
         path: '/rentalstate',
@@ -46,7 +49,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/cscenter',
-        element: <CSCenter />,
+        element: <CsCenter />,
       },
       {
         path: '/mypage/:id',

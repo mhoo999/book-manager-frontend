@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 import { Outlet } from 'react-router-dom'
-import Footer from './components/Footer'
-import Header from './components/Header'
-import GlobalStyle from './components/GlobalStyle'
+
+import Header from '../components/layout/Header'
+import Footer from '../components/layout/Footer'
+import GlobalStyle from '../components/layout/GlobalStyle'
 
 const Wrapper = styled.div`
   background-color: white;

@@ -127,7 +127,10 @@ const Header = () => {
           <Navigation onMouseEnter={()=>setShowLnb(true)}  show={showLnb}>
             <ul className="gnb">
               <li>
-                <NavLink to={'/searchbook'} className={({isActive}) => isActive ? 'on' : undefined}>도서검색</NavLink>
+                <NavLink to={'/'} className={({isActive}) => isActive ? 'on' : undefined}>Home</NavLink>
+              </li>
+              <li>
+                <NavLink to={'/book'} className={({isActive}) => isActive ? 'on' : undefined}>도서검색</NavLink>
               </li>
               <li>
                 <NavLink to={'/rentalstate'} className={({isActive}) => isActive ? 'on' : undefined}>대여현황</NavLink>

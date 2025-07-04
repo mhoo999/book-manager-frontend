@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import useInputs from '../../hooks/useInputs'
-import Modal from '../../components/Modal'
+
 import { createSearchParams, useNavigate } from 'react-router-dom'
+import Modal from '../util/Modal'
 
 const FormContainer = styled.div`
   background-color: white;
@@ -77,7 +78,7 @@ const SearchForm = () => {
 
     const queryString = createSearchParams({ type, keyword }).toString()
     console.log(`queryString = ${queryString}`)
-    navigate(`/searchbook?${queryString}`)
+    navigate(`/book/search?${queryString}`)
 
     reset()
   }

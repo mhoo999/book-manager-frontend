@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import useInputs from '../../hooks/useInputs'
-import Modal from '../../components/Modal'
+
 import { createSearchParams, useNavigate } from 'react-router-dom'
+import Modal from '../../components/util/Modal'
 
 const FormContainer = styled.div`
   background-color: white;

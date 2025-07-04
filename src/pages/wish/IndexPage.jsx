@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import WishList from './wish/WishList'
+import WishList from './WishList'
 
 const WishBook = () => {
   const WishContainer = styled.section`

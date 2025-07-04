@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import RentalList from './rental/RentalList'
-import SearchForm from './rental/SearchForm'
+import RentalList from './RentalList'
+import SearchForm from './SearchForm'
 
 const rentals = [
   {

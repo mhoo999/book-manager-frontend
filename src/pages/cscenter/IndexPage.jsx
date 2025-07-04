@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import Board from './cscenter/Board'
+import Board from './Board'
 
 const CSCenter = () => {
   const CSContainer = styled.section`
