@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import styled from 'styled-components'
 import useInputs from '../../hooks/useInputs'
 
 import { createSearchParams, useNavigate } from 'react-router-dom'
-import Modal from '../util/Modal'
+import Modal from '../common/Modal'
 
-const FormContainer = styled.div`
+const SearchFormContainer = styled.div`
   background-color: white;
   padding: 16px;
   border-radius: 6px;
@@ -51,15 +51,10 @@ const SearchForm = () => {
     keyword: '',
   })
 
-  const { type, keyword } = form
+  const { type, keyword } = form //입력값
 
-  useEffect(() => {
-    //React는 상태를 비동기적으로 처리하기 때문에 로그확인은 useEffect에서 하는게 정확하다.
-    //console.log('form =', form)
-  }, [form])
-
-  const keywordRef = useRef()
   const [isOpen, setIsOpen] = useState(false) //모달창 열고 닫는 변수
+  const keywordRef = useRef()
 
   const clseModalFn = () => {
     setIsOpen(false)
@@ -69,16 +64,13 @@ const SearchForm = () => {
   const onSubmit = (e) => {
     e.preventDefault()
     if (!keyword.trim()) {
-      // alert('검색어가 입력되지 않았습니다.')
       setIsOpen(true) //모달창 열기
-
       keywordRef.current.focus()
       return
     }
 
     const queryString = createSearchParams({ type, keyword }).toString()
-    console.log(`queryString = ${queryString}`)
-    navigate(`/book/search?${queryString}`)
+    navigate(`/books/search?${queryString}`)
 
     reset()
   }
@@ -88,7 +80,8 @@ const SearchForm = () => {
       <Modal isOpen={isOpen} clseModalFn={clseModalFn} title="입력오류">
         검색어가 입력되지 않았습니다.
       </Modal>
-      <FormContainer>
+
+      <SearchFormContainer>
         <form onSubmit={onSubmit}>
           <select name="type" onChange={onChange} value={type}>
             <option value="title">도서명</option>
@@ -105,7 +98,7 @@ const SearchForm = () => {
           />
           <button>검색</button>
         </form>
-      </FormContainer>
+      </SearchFormContainer>
     </>
   )
 }

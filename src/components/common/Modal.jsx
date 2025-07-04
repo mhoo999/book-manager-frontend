@@ -13,7 +13,7 @@ const ModalContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.6);
 
   ${(props) =>
-    props.isOpen
+    props.$isOpen
       ? ''
       : css`
           display: none;
@@ -73,7 +73,7 @@ const ModalContainer = styled.div`
 const Modal = (props) => {
   const { isOpen, clseModalFn, title, children } = props
   return (
-    <ModalContainer isOpen={isOpen}>
+    <ModalContainer $isOpen={isOpen}>
       <section>
         <header>{title}</header>
         <main>{children}</main>

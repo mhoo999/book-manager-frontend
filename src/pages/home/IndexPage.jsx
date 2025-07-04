@@ -1,6 +1,6 @@
 import Content from '../../components/home/Content'
 import Banner from '../../components/home/Banner'
-import SearchForm from '../../components/book/SearchForm'
+import SearchForm from '../../components/books/SearchForm'
 
 const Home = () => {
   return (

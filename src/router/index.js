@@ -1,16 +1,16 @@
 import { createBrowserRouter } from 'react-router-dom'
 import { lazy } from 'react'
 
-import searchRouter from './searchRouter'
 import Layout from '../layout/Layout'
+import searchRouter from './searchRouter'
 
 //Suspense와 lazy를 이용한 Code-Splitting
 const ErrorPage = lazy(() => import('../pages/ErrorPage'))
 const Home = lazy(() => import('../pages/home/IndexPage'))
-const IndexPage = lazy(() => import('../pages/book/IndexPage'))
+const IndexPage = lazy(() => import('../pages/books/IndexPage'))
 const RentalState = lazy(() => import('../pages/rental/IndexPage'))
 const WishBook = lazy(() => import('../pages/wish/IndexPage'))
-const CsCenter = lazy(() => import('../pages/cscenter/IndexPage'))
+const CsCenter = lazy(() => import('../pages/cs/IndexPage'))
 const MyPage = lazy(() => import('../pages/mypage/IndexPage'))
 const Login = lazy(() => import('../pages/login/Login'))
 const NotFound = lazy(() => import('../pages/NotFound'))
@@ -35,20 +35,20 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: '/book',
+        path: '/books',
         element: <IndexPage />,
         children: searchRouter(),
       },
       {
-        path: '/rentalstate',
+        path: '/rental',
         element: <RentalState />,
       },
       {
-        path: '/wishbook',
+        path: '/wish',
         element: <WishBook />,
       },
       {
-        path: '/cscenter',
+        path: '/cs',
         element: <CsCenter />,
       },
       {

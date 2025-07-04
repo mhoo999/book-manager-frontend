@@ -1,108 +1,109 @@
 import styled from 'styled-components'
-const Board = () => {
-  const HeaderWrapper = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-  `
 
-  const Title = styled.h2`
-    font-size: 1.5rem;
-    font-weight: bold;
-  `
+const HeaderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+`
 
-  const InquiryButton = styled.a`
-    background-color: #2563eb;
-    color: #fff !important;
-    padding: 0.5rem 1rem;
-    border-radius: 0.375rem;
-    font-size: 0.875rem;
-    text-decoration: none;
-    &:hover {
-      background-color: #1d4ed8;
-    }
-  `
+const Title = styled.h2`
+  font-size: 1.5rem;
+  font-weight: bold;
+`
 
-  const Table = styled.table`
-    width: 100%;
-    background-color: #fff;
-    border-radius: 0.375rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    font-size: 0.875rem;
-    border-collapse: collapse;
+const InquiryButton = styled.a`
+  background-color: #2563eb;
+  color: #fff !important;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  text-decoration: none;
+  &:hover {
+    background-color: #1d4ed8;
+  }
+`
 
-    thead {
-      background-color: #f3f4f6;
-      color: #374151;
+const Table = styled.table`
+  width: 100%;
+  background-color: #fff;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  font-size: 0.875rem;
+  border-collapse: collapse;
 
-      th {
-        padding: 0.75rem 1rem;
-        text-align: center;
-      }
+  thead {
+    background-color: #f3f4f6;
+    color: #374151;
 
-      th:nth-child(2) {
-        text-align: left;
-      }
+    th {
+      padding: 0.75rem 1rem;
+      text-align: center;
     }
 
-    tbody {
-      color: #374151;
+    th:nth-child(2) {
+      text-align: left;
+    }
+  }
 
-      tr {
-        border-top: 1px solid #e5e7eb;
-      }
+  tbody {
+    color: #374151;
 
-      tr.reply {
-        background-color: #f9fafb;
-        color: #1d4ed8;
+    tr {
+      border-top: 1px solid #e5e7eb;
+    }
 
-        td {
-          color: #1d4ed8;
-        }
-
-        .admin {
-          color: #6b7280;
-        }
-      }
+    tr.reply {
+      background-color: #f9fafb;
+      color: #1d4ed8;
 
       td {
-        padding: 0.75rem 1rem;
-        text-align: center;
+        color: #1d4ed8;
       }
 
-      td:nth-child(2) {
-        text-align: left;
-      }
-    }
-  `
-
-  const Pagination = styled.div`
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 1.5rem;
-
-    button {
-      padding: 0.25rem 0.75rem;
-      border-radius: 0.25rem;
-      border: 1px solid #d1d5db;
-      background-color: white;
-      font-size: 0.875rem;
-      cursor: pointer;
-
-      &.active {
-        background-color: #2563eb;
-        color: white;
-      }
-
-      &:hover {
-        background-color: #dbeafe;
+      .admin {
+        color: #6b7280;
       }
     }
-  `
 
+    td {
+      padding: 0.75rem 1rem;
+      text-align: center;
+    }
+
+    td:nth-child(2) {
+      text-align: left;
+    }
+  }
+`
+
+const Pagination = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+
+  button {
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.25rem;
+    border: 1px solid #d1d5db;
+    background-color: white;
+    font-size: 0.875rem;
+    cursor: pointer;
+
+    &.active {
+      background-color: #2563eb;
+      color: white;
+    }
+
+    &:hover {
+      background-color: #dbeafe;
+    }
+  }
+`
+
+const Board = () => {
   return (
     <>
       <HeaderWrapper>

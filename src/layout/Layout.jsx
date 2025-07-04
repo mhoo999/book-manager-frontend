@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom'
 import Header from '../components/layout/Header'
 import Footer from '../components/layout/Footer'
 import GlobalStyle from '../components/layout/GlobalStyle'
+import { Helmet } from 'react-helmet'
 
 const Wrapper = styled.div`
   background-color: white;
@@ -14,6 +15,12 @@ const Wrapper = styled.div`
 const Layout = () => {
   return (
     <>
+      <Helmet>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+          rel="stylesheet"
+        />
+      </Helmet>
       <GlobalStyle />
       <Wrapper>
         <Header />

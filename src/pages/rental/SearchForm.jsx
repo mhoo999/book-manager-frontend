@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import useInputs from '../../hooks/useInputs'
 
 import { createSearchParams, useNavigate } from 'react-router-dom'
-import Modal from '../../components/util/Modal'
+import Modal from '../../components/common/Modal'
 
 const FormContainer = styled.div`
   background-color: white;

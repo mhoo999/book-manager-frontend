@@ -55,7 +55,7 @@ const Navigation = styled.nav`
       }
 
       > .lnb {
-        display: ${(props) => (props.show ? 'block' : 'none')};
+        display: ${(props) => (props.$show ? 'block' : 'none')};
         position: absolute;
         top: 56px;
         left: 0;
@@ -77,7 +77,7 @@ const Navigation = styled.nav`
 `
 
 const BgLnb = styled.div`
-  display: ${(props) => (props.show ? 'block' : 'none')};
+  display: ${(props) => (props.$show ? 'block' : 'none')};
   position: absolute;
   left: 0;
   top: 72px;
@@ -106,7 +106,7 @@ const Header = () => {
   return (
     <HeaderContainer>
       <div>      
-        <BgLnb onMouseLeave={()=>setShowLnb(false)} show={showLnb} />
+        <BgLnb onMouseLeave={()=>setShowLnb(false)} $show={showLnb} />
         <Container>
           <Logo>
             <Link to={'/'}>북매니저</Link>
@@ -124,30 +124,30 @@ const Header = () => {
     const location = useLocation();
     const { bookId, title } = location.state || {}; // state 없을 수도 있음
 */}
-          <Navigation onMouseEnter={()=>setShowLnb(true)}  show={showLnb}>
+          <Navigation onMouseEnter={()=>setShowLnb(true)}  $show={showLnb}>
             <ul className="gnb">
               <li>
                 <NavLink to={'/'} className={({isActive}) => isActive ? 'on' : undefined}>Home</NavLink>
               </li>
               <li>
-                <NavLink to={'/book'} className={({isActive}) => isActive ? 'on' : undefined}>도서검색</NavLink>
+                <NavLink to={'/books'} className={({isActive}) => isActive ? 'on' : undefined}>도서검색</NavLink>
               </li>
               <li>
-                <NavLink to={'/rentalstate'} className={({isActive}) => isActive ? 'on' : undefined}>대여현황</NavLink>
+                <NavLink to={'/rental'} className={({isActive}) => isActive ? 'on' : undefined}>대여현황</NavLink>
                 <ol className="lnb">
                   <li><Link to={'/rentalstate/list'}>대여목록</Link></li>
                   <li><Link to={'/rentalstate/overdue'}>미납도서</Link></li>
                 </ol>
               </li>
               <li>
-                <NavLink to={'/wishbook'} className={({isActive}) => isActive ? 'on' : undefined}>희망도서</NavLink>
+                <NavLink to={'/wish'} className={({isActive}) => isActive ? 'on' : undefined}>희망도서</NavLink>
                 <ol className="lnb">
                   <li><Link to={'/wishbook/list'}>신청목록</Link></li>
                   <li><Link to={'/wishbook/request'}>도서신청</Link></li>
                 </ol>
               </li>
               <li>
-                <NavLink to={'/cscenter'} className={({isActive}) => isActive ? 'on' : undefined}>고객센터</NavLink>
+                <NavLink to={'/cs'} className={({isActive}) => isActive ? 'on' : undefined}>고객센터</NavLink>
                 <ol className="lnb">
                   <li><Link to={'/cscenter/request'}>문의하기</Link></li>
                   <li><Link to={'/cscenter/faq'}>FAQ</Link></li>
