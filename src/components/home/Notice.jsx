@@ -26,7 +26,7 @@ const NoticeContainer = styled.article`
 const NoticeItem = ({ noticeId, title, createdAt }) => {
   return (
     <li>
-      <Link to={noticeId}>
+      <Link to={`cs/notice/${noticeId}`}>
         {title}
         <span className="text-gray">{createdAt}</span>
       </Link>

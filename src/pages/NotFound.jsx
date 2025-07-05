@@ -5,7 +5,7 @@ const NotFound = () => {
 
   setTimeout(() => {
     navigate('/', { replace: true })
-  }, 3000)
+  }, 3100)
   return <h2>요청하신 페이지를 찾을 수 없습니다.</h2>
 }
 

@@ -137,15 +137,15 @@ const Header = () => {
               <li>
                 <NavLink to={'/rental'} className={({isActive}) => isActive ? 'on' : undefined}>대여현황</NavLink>
                 <ol className="lnb">
-                  <li><Link to={'/rentalstate/list'}>대여목록</Link></li>
-                  <li><Link to={'/rentalstate/overdue'}>미납도서</Link></li>
+                  <li><Link to={'/rental/list'}>대여목록</Link></li>
+                  <li><Link to={'/rental/over'}>미납도서</Link></li>
                 </ol>
               </li>
               <li>
                 <NavLink to={'/wish'} className={({isActive}) => isActive ? 'on' : undefined}>희망도서</NavLink>
                 <ol className="lnb">
-                  <li><Link to={'/wishbook/list'}>신청목록</Link></li>
-                  <li><Link to={'/wishbook/request'}>도서신청</Link></li>
+                  <li><Link to={'/wish/list'}>신청목록</Link></li>
+                  <li><Link to={'/wish/apply'}>도서신청</Link></li>
                 </ol>
               </li>
               <li>
