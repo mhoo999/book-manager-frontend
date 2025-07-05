@@ -46,7 +46,23 @@ const Notice = () => {
     console.log('notices=', notices)
   }, [notices])
 
-  if (notices.length < 1) return <></>
+  if (!notices || notices.length < 1) {
+    return (
+      <NoticeContainer>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100%',
+          }}
+        >
+          <h3>등록된 공지사항이 없습니다.</h3>
+        </div>
+      </NoticeContainer>
+    )
+  }
+
   return (
     <NoticeContainer>
       <h3>공지사항</h3>
