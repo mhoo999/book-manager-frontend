@@ -1,6 +1,6 @@
 import { lazy } from 'react'
 import styled from 'styled-components'
-import { Outlet, useSearchParams } from 'react-router-dom'
+import { Outlet, useParams, useSearchParams } from 'react-router-dom'
 import LatestBooks from '../../components/books/LatestBooks'
 
 const SearchForm = lazy(() => import('./../../components/books/SearchForm'))
@@ -17,6 +17,7 @@ const SearchContainer = styled.section`
 `
 
 const SearchBook = () => {
+  const { bookId } = useParams()
   const [searchParams] = useSearchParams()
   const keyword = searchParams.get('keyword')
 
@@ -29,12 +30,18 @@ const SearchBook = () => {
 
   return (
     <SearchContainer>
-      <h2>
-        🔍 {title} {keyword && <span>{keyword}</span>}
-      </h2>
-      <SearchForm />
+      {bookId ? (
+        <></>
+      ) : (
+        <h2>
+          🔍 {title} {keyword && <span>{keyword}</span>}
+        </h2>
+      )}
+
+      {bookId ? <></> : <SearchForm />}
+
       <Outlet />
-      <LatestBooks />
+      {bookId ? <></> : <LatestBooks />}
     </SearchContainer>
   )
 }

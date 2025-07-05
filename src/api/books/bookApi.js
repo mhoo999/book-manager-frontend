@@ -3,6 +3,9 @@ import axios from 'axios'
 export const API_SERVER_HOST = 'http://localhost:8080'
 const uriBooks = `${API_SERVER_HOST}/api/v1/books`
 
+//대여신청(인증필요)
+export const rentBook = async (bookId) => {}
+
 //책정보
 export const bookInfo = async (bookId) => {
   try {

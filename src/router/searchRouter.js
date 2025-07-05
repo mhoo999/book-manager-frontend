@@ -1,7 +1,7 @@
 import { lazy } from 'react'
-import BookInfoPage from '../pages/books/BookInfoPage'
 
 const SearchPage = lazy(() => import('../pages/books/SearchPage'))
+const BookPage = lazy(() => import('../pages/books/BookPage'))
 
 const searchRouter = () => {
   return [
@@ -10,8 +10,8 @@ const searchRouter = () => {
       element: <SearchPage />,
     },
     {
-      path: 'info/:bookId',
-      element: <BookInfoPage />,
+      path: ':bookId',
+      element: <BookPage />,
     },
   ]
 }

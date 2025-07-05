@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import {
   createSearchParams,
-  Link,
   useNavigate,
   useSearchParams,
 } from 'react-router-dom'
@@ -151,7 +150,7 @@ const SearchPage = () => {
             key={book.bookId}
             onClick={() =>
               navigate({
-                pathname: `../info/${book.bookId}`,
+                pathname: `../${book.bookId}`,
                 search: queryString,
               })
             }
