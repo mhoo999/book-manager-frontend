@@ -2,14 +2,10 @@ import styled from 'styled-components'
 
 const HeaderWrapper = styled.div`
   display: flex;
+  flex-direction: row-reverse;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
-`
-
-const Title = styled.h2`
-  font-size: 1.5rem;
-  font-weight: bold;
 `
 
 const InquiryButton = styled.a`
@@ -103,11 +99,10 @@ const Pagination = styled.div`
   }
 `
 
-const Board = () => {
+const QnaPage = () => {
   return (
     <>
       <HeaderWrapper>
-        <Title>📖 문의하기</Title>
         <InquiryButton href="#">문의하기</InquiryButton>
       </HeaderWrapper>
 
@@ -175,4 +170,4 @@ const Board = () => {
   )
 }
 
-export default Board
+export default QnaPage

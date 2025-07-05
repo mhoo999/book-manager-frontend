@@ -53,6 +53,11 @@ const Container = styled.article`
     border-radius: 6px;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
     text-align: center;
+    transition: all 0.1s;
+    &:hover {
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+      transform: translate(1px, 1px);
+    }
 
     img {
       width: 160px;

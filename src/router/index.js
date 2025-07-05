@@ -3,6 +3,7 @@ import { lazy } from 'react'
 
 import Layout from '../layout/Layout'
 import searchRouter from './searchRouter'
+import csRouter from './csRouter'
 
 //Suspense와 lazy를 이용한 Code-Splitting
 const ErrorPage = lazy(() => import('../pages/ErrorPage'))
@@ -50,6 +51,7 @@ const router = createBrowserRouter([
       {
         path: '/cs',
         element: <CsCenter />,
+        children: csRouter(),
       },
       {
         path: '/mypage/:id',

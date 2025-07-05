@@ -93,6 +93,11 @@ const BookCard = styled.div`
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
+  transition: all 0.1s;
+  &:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    transform: translate(1px, 1px);
+  }
 
   img {
     width: 100%;
@@ -136,12 +141,18 @@ const SearchPage = () => {
   }, [type, keyword])
 
   useEffect(() => {
-    console.log('북스=', serverData.books)
+    // console.log('북스=', serverData.books)
   }, [serverData])
 
   const navigate = useNavigate()
   const queryString = createSearchParams({ page, size }).toString()
 
+  if (serverData.books.length < 1)
+    return (
+      <h2 style={{ marginTop: '32px', fontWeight: 400, textAlign: 'center' }}>
+        '{keyword}' 키워드로 검색된 도서가 없습니다.
+      </h2>
+    )
   return (
     <ArticleContainer>
       <BookGrid>

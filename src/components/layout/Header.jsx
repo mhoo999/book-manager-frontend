@@ -84,7 +84,9 @@ const BgLnb = styled.div`
   z-index: 1000;
   width: 100%;
   height: 120px;
-  background-color: rgba(59, 130, 246, 0.06);
+  background-color: #88b6ff;
+  background-image: url(https://img.freepik.com/free-vector/light-grey-dots-background_78370-2583.jpg?semt=ais_hybrid&w=740);
+  /* background-size: 96px; */
   border-top: 3px solid #3b82f6;
   border-bottom: 1px solid #bfdbfe;
   animation: fade 0.3s;
@@ -149,9 +151,9 @@ const Header = () => {
               <li>
                 <NavLink to={'/cs'} className={({isActive}) => isActive ? 'on' : undefined}>고객센터</NavLink>
                 <ol className="lnb">
-                  <li><Link to={'/cscenter/request'}>문의하기</Link></li>
-                  <li><Link to={'/cscenter/faq'}>FAQ</Link></li>
-                  <li><Link to={'/cscenter/notice'}>공지사항</Link></li>
+                  <li><Link to={'/cs/qna'}>문의하기</Link></li>
+                  <li><Link to={'/cs/faq'}>FAQ</Link></li>
+                  <li><Link to={'/cs/notice'}>공지사항</Link></li>
                 </ol>
               </li>
               <li>

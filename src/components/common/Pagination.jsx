@@ -28,7 +28,7 @@ const Container = styled.div`
 `
 
 const Pagination = ({ serverData, movePage }) => {
-  console.log('serverData=', serverData)
+  // console.log('serverData=', serverData)
   let { page, size, totalCount, totalPages } = serverData
 
   let endPage = Math.ceil((page + 1) / 10) * 10 // 페이지네이션 끝번호

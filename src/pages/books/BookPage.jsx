@@ -152,10 +152,6 @@ const BookPage = () => {
     })
   }, [bookId])
 
-  useEffect(() => {
-    console.log('book=', book)
-  }, [book])
-
   if (!book || !book.title) return <Loading />
 
   return (

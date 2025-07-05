@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import Board from './Board'
+import { Outlet } from 'react-router-dom'
+import BreadCrumb from '../../components/cscenter/BreadCrumb'
 
 const CSContainer = styled.section`
   > h2 {
@@ -15,7 +16,8 @@ const CSContainer = styled.section`
 const CSCenter = () => {
   return (
     <CSContainer>
-      <Board />
+      <BreadCrumb />
+      <Outlet />
     </CSContainer>
   )
 }

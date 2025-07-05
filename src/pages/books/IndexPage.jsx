@@ -23,7 +23,7 @@ const SearchBook = () => {
 
   let title = ''
   if (keyword) {
-    title = `검색결과:`
+    title = `검색키워드:`
   } else {
     title = '도서 검색'
   }
