@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Outlet } from 'react-router-dom'
-import BreadCrumb from '../../components/cscenter/BreadCrumb'
+import BreadCrumb from '../../components/cs/BreadCrumb'
 
 const CSContainer = styled.section`
   > h2 {

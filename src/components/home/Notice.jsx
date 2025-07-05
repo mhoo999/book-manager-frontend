@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { noticeList } from '../../api/notice/noticeApi'
+import NoContent from '../common/NoContent'
 
 const NoticeContainer = styled.article`
   flex: 2;
@@ -49,16 +50,7 @@ const Notice = () => {
   if (!notices || notices.length < 1) {
     return (
       <NoticeContainer>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '100%',
-          }}
-        >
-          <h3>등록된 공지사항이 없습니다.</h3>
-        </div>
+        <NoContent msg={`등록된 공지사항이 없습니다.`} />
       </NoticeContainer>
     )
   }

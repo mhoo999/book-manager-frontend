@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import { searchBook } from '../../api/books/bookApi'
 import Pagination from '../../components/common/Pagination'
 import useCustomMove from '../../hooks/useCustomMove'
+import NoContent from '../../components/common/NoContent'
 
 const initData = [
   {
@@ -149,9 +150,9 @@ const SearchPage = () => {
 
   if (serverData.books.length < 1)
     return (
-      <h2 style={{ marginTop: '32px', fontWeight: 400, textAlign: 'center' }}>
-        '{keyword}' 키워드로 검색된 도서가 없습니다.
-      </h2>
+      <ArticleContainer>
+        <NoContent msg={`${keyword} 키워드로 검색된 도서가 없습니다.`} />
+      </ArticleContainer>
     )
   return (
     <ArticleContainer>

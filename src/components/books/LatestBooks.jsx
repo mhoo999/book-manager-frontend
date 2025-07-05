@@ -81,38 +81,38 @@ const Book = ({ src, title, desc }) => {
   )
 }
 
-const initData = [
-  {
-    id: 1,
-    src: 'https://picsum.photos/seed/book1/160/240',
-    title: '모던 자바스크립트',
-    desc: '이웅모 | 위키북스',
-  },
-  {
-    id: 2,
-    src: 'https://picsum.photos/seed/book2/160/240',
-    title: 'HTML+CSS 디자인',
-    desc: '조엘 스코스 | 한빛미디어',
-  },
-  {
-    id: 3,
-    src: 'https://picsum.photos/seed/book4/160/240',
-    title: '리액트 완벽 가이드',
-    desc: '맥스 슈바르츠무엘러 | 인사이트',
-  },
-  {
-    id: 4,
-    src: 'https://picsum.photos/seed/book3/160/240',
-    title: '자바의 정석',
-    desc: '남궁성 | 도우출판',
-  },
-  {
-    id: 5,
-    src: 'https://picsum.photos/seed/book5/160/240',
-    title: '코딩 인터뷰 완전 분석',
-    desc: '게일 맥도웰 | 인사이트',
-  },
-]
+// const initData = [
+//   {
+//     id: 1,
+//     src: 'https://picsum.photos/seed/book1/160/240',
+//     title: '모던 자바스크립트',
+//     desc: '이웅모 | 위키북스',
+//   },
+//   {
+//     id: 2,
+//     src: 'https://picsum.photos/seed/book2/160/240',
+//     title: 'HTML+CSS 디자인',
+//     desc: '조엘 스코스 | 한빛미디어',
+//   },
+//   {
+//     id: 3,
+//     src: 'https://picsum.photos/seed/book4/160/240',
+//     title: '리액트 완벽 가이드',
+//     desc: '맥스 슈바르츠무엘러 | 인사이트',
+//   },
+//   {
+//     id: 4,
+//     src: 'https://picsum.photos/seed/book3/160/240',
+//     title: '자바의 정석',
+//     desc: '남궁성 | 도우출판',
+//   },
+//   {
+//     id: 5,
+//     src: 'https://picsum.photos/seed/book5/160/240',
+//     title: '코딩 인터뷰 완전 분석',
+//     desc: '게일 맥도웰 | 인사이트',
+//   },
+// ]
 
 const LatestBooks = () => {
   const [books, setBooks] = useState({ data: [] })
@@ -125,8 +125,12 @@ const LatestBooks = () => {
   }, [])
 
   useEffect(() => {
-    setBooks({ data: initData })
+    setBooks({ data: [] })
   }, [])
+
+  if (!books.data || books.data.length < 1) {
+    return <></>
+  }
 
   return (
     <Section>

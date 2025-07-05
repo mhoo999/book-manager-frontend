@@ -4,6 +4,7 @@ import { noticeList } from '../../api/notice/noticeApi'
 import { Link } from 'react-router-dom'
 import Pagination from '../../components/common/Pagination'
 import useCustomMove from '../../hooks/useCustomMove'
+import NoContent from '../../components/common/NoContent'
 
 const TableWrapper = styled.div`
   background-color: white;
@@ -79,7 +80,7 @@ const NoticePage = () => {
   }, [])
 
   if (!serverData.notices || serverData.notices.length < 1) {
-    return <h2>등록된 공지사항이 없습니다.</h2>
+    return <NoContent msg={`등록된 공지사항이 없습니다.`} />
   }
   return (
     <>
