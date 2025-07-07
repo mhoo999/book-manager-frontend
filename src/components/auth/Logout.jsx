@@ -3,6 +3,7 @@ import { logout } from '../../slices/loginSlice'
 import styled from 'styled-components'
 import { replace, useNavigate } from 'react-router-dom'
 import Modal from '../common/Modal'
+import useCustomLogin from '../../hooks/useCustomLogin'
 
 const Container = styled.div`
   flex-grow: 1;
@@ -44,20 +45,15 @@ const LogoutForm = styled.div`
 `
 
 const LogoutComponent = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const { doLogout, moveToPath } = useCustomLogin()
 
   const handleClickLogout = () => {
-    dispatch(logout())
-    navigate('/', replace)
+    doLogout()
+    alert('로그아웃 되었습니다.')
+    moveToPath('/')
   }
+
   return (
-    //   <LogoutContainer>
-    //     <h2>회원 로그아웃</h2>
-    //     <p>
-    //       <button onClick={handleClickLogout}>Logout</button>
-    //     </p>
-    //   </LogoutContainer>
     <Container>
       <Title>🙋 로그아웃 하시겠어요?</Title>
       <Message>로그아웃을 원하시면 아래 버튼을 눌러주세요.</Message>

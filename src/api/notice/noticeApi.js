@@ -1,6 +1,6 @@
 import axios from 'axios'
+import { API_SERVER_HOST } from '../books/bookApi'
 
-export const API_SERVER_HOST = 'http://localhost:8080'
 const uriNotice = `${API_SERVER_HOST}/api/notice`
 
 //공지목록

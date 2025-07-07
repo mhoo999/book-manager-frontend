@@ -11,6 +11,7 @@
     "axios": "^1.10.0",
     "gh-pages": "^6.3.0",
     "react": "^19.1.0",
+    "react-cookie": "^8.0.1",
     "react-dom": "^19.1.0",
     "react-helmet": "^6.1.0",
     "react-redux": "^9.2.0",
@@ -56,6 +57,5 @@
       "eslint --fix",
       "prettier --write"
     ]
-  },
-  "homepage": "https://javaspringstudy.github.io/bookmanager-frontend/"
+  }
 }

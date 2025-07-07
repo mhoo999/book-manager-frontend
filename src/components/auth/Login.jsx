@@ -3,6 +3,7 @@ import useInputs from '../../hooks/useInputs'
 import { useDispatch } from 'react-redux'
 import { login } from '../../slices/loginSlice'
 import { Link, replace, useNavigate } from 'react-router-dom'
+import useCustomLogin from '../../hooks/useCustomLogin'
 
 const Container = styled.main`
   max-width: 640px;
@@ -79,16 +80,26 @@ const initState = {
   pw: '',
 }
 
-const LoginComponent = () => {
+const Login = () => {
   const [loginParam, onChange, reset] = useInputs(initState)
-  const { email, pw } = loginParam
-  const navigate = useNavigate()
+  const { doLogin, moveToPath } = useCustomLogin()
 
-  const dispatch = useDispatch()
+  const { email, pw } = loginParam
+
   const handleClickLogin = () => {
-    dispatch(login(loginParam))
-    reset()
-    navigate('/', replace)
+    doLogin(loginParam).then((data) => {
+      console.log('data=', data)
+
+      if (data.error) {
+        alert(
+          '입력하신 이메일 또는 비밀번호가 올바르지 않습니다.\n다시한번 확인해 주세요',
+        )
+        reset()
+      } else {
+        alert('로그인 성공~!')
+        moveToPath('/')
+      }
+    })
   }
 
   return (
@@ -127,4 +138,4 @@ const LoginComponent = () => {
   )
 }
 
-export default LoginComponent
+export default Login
