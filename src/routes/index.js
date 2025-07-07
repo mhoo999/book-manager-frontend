@@ -13,9 +13,11 @@ const RentalState = lazy(() => import('../pages/rental/IndexPage'))
 const WishBook = lazy(() => import('../pages/wish/IndexPage'))
 const CsCenter = lazy(() => import('../pages/cs/IndexPage'))
 const MyPage = lazy(() => import('../pages/mypage/IndexPage'))
-const Login = lazy(() => import('../pages/login/Login'))
+
 const NotFound = lazy(() => import('../pages/NotFound'))
 
+const Login = lazy(() => import('../pages/auth/LoginPage'))
+const Logout = lazy(() => import('../pages/auth/LogoutPage'))
 /*
 	v7 방식대로 했을 때의 장점
 
@@ -36,30 +38,34 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: '/books',
+        path: 'books',
         element: <IndexPage />,
         children: searchRouter(),
       },
       {
-        path: '/rental',
+        path: 'rental',
         element: <RentalState />,
       },
       {
-        path: '/wish',
+        path: 'wish',
         element: <WishBook />,
       },
       {
-        path: '/cs',
+        path: 'cs',
         element: <CsCenter />,
         children: csRouter(),
       },
       {
-        path: '/mypage/:id',
+        path: 'mypage/:id',
         element: <MyPage />,
       },
       {
-        path: '/login',
+        path: 'login',
         element: <Login />,
+      },
+      {
+        path: 'logout',
+        element: <Logout />,
       },
       {
         path: '*',

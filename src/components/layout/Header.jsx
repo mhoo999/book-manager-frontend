@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -104,6 +105,7 @@ const BgLnb = styled.div`
 const Header = () => {
 
   const [showLnb, setShowLnb] = useState(false)
+  const loginState = useSelector((state) => state.loginSlice)
 
   return (
     <HeaderContainer>
@@ -165,8 +167,10 @@ const Header = () => {
                 </ol>
               </li>
               <li>
-                <NavLink to={'/login'} className={({isActive}) => isActive ? 'on' : undefined}>로그인</NavLink>
-              </li>
+                {loginState.email ? 
+                <NavLink to={'/logout'} className={({isActive}) => isActive ? 'on' : undefined}>로그아웃</NavLink> :
+                <NavLink to={'/login'} className={({isActive}) => isActive ? 'on' : undefined}>로그인</NavLink> }
+              </li> 
             </ul>
           </Navigation>
         </Container>
