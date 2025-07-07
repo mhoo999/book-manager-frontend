@@ -8,6 +8,7 @@ export const loginPost = async (loginParam) => {
     headers: {
       'Content-Type': 'application/json',
     },
+    withCredentials: true, //쿠키 전송을 위해...
   }
 
   console.log('loginParam =', loginParam)

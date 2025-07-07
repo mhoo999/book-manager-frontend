@@ -51,8 +51,10 @@ const loginSlice = createSlice({
         const payload = action.payload
 
         //정상적인 로그인시에만 저장
-        if (!payload.error) setCookie('member', JSON.stringify(payload), 1)
-
+        if (!payload.error) {
+          // 사용자 정보가 있다면 필요한 일부만 쿠키에 저장
+          setCookie('member', JSON.stringify({ email: payload.email }), 1)
+        }
         return payload
       })
 

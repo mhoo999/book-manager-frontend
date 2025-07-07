@@ -90,6 +90,10 @@ const Login = () => {
     doLogin(loginParam).then((data) => {
       console.log('data=', data)
 
+      if (data.accessToken) {
+        localStorage.setItem('accessToken', data.accessToken)
+      }
+
       if (data.error) {
         alert(
           '입력하신 이메일 또는 비밀번호가 올바르지 않습니다.\n다시한번 확인해 주세요',
