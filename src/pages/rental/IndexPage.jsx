@@ -4,6 +4,7 @@ import SearchForm from './SearchForm'
 import { useState } from 'react'
 import BreadCrumb from '../../components/rental/BreadCrumb'
 import { Outlet } from 'react-router-dom'
+import useCustomLogin from '../../hooks/useCustomLogin'
 
 const rentals = [
   {
@@ -90,6 +91,13 @@ const RentalContainer = styled.section`
 `
 
 const RentalState = () => {
+  const { isLogin, moveToLoginReturn } = useCustomLogin()
+
+  if (!isLogin) {
+    alert('로그인후 사용할 수 있습니다.')
+    return moveToLoginReturn()
+  }
+
   return (
     <RentalContainer>
       <BreadCrumb />

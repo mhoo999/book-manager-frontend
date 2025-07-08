@@ -6,7 +6,7 @@ import searchRouter from './searchRouter'
 import csRouter from './csRouter'
 import rentalRouter from './rentalRouter'
 import wishRouter from './wishRouter'
-import mypageRouter from './mypageRouter'
+import myRouter from './myRouter'
 
 //Suspense와 lazy를 이용한 Code-Splitting
 const ErrorPage = lazy(() => import('../pages/ErrorPage'))
@@ -63,7 +63,7 @@ const router = createBrowserRouter([
       {
         path: 'mypage',
         element: <MyPage />,
-        children: mypageRouter(),
+        children: myRouter(),
       },
       {
         path: 'login',

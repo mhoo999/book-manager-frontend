@@ -2,10 +2,10 @@ import { lazy } from 'react'
 import { Navigate } from 'react-router-dom'
 
 const DashBoard = lazy(() => import('../pages/mypage/DashBoard'))
-const Info = lazy(() => import('../pages/mypage/Info'))
+const MyInfo = lazy(() => import('../pages/mypage/MyInfo'))
 const Withdraw = lazy(() => import('../pages/mypage/Withdraw'))
 
-const mypageRouter = () => {
+const myRouter = () => {
   return [
     {
       path: '',
@@ -17,7 +17,7 @@ const mypageRouter = () => {
     },
     {
       path: 'info',
-      element: <Info />,
+      element: <MyInfo />,
     },
     {
       path: 'withdraw',
@@ -26,4 +26,4 @@ const mypageRouter = () => {
   ]
 }
 
-export default mypageRouter
+export default myRouter
