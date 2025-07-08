@@ -87,14 +87,12 @@ const Pagination = styled.div`
 `
 
 const RentalList = ({ rentals }) => {
-  const { exceptionHandle } = useCustomLogin()
+  const { isLogin, moveToLoginReturn } = useCustomLogin()
 
-  useEffect(() => {
-    //서버요청
-    latestBook()
-      .then((data) => {})
-      .catch((err) => exceptionHandle(err))
-  }, [])
+  if (!isLogin) {
+    alert('로그인후 사용할 수 있습니다.')
+    return moveToLoginReturn()
+  }
 
   return (
     <RentalContainer>

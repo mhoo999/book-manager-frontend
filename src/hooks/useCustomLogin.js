@@ -36,6 +36,7 @@ const useCustomLogin = () => {
   const doLogin = async (loginParam) => {
     //----------로그인 함수
     const action = await dispatch(loginPostAsync(loginParam))
+    console.log('action.payload=', action.payload) //{name: 'duly@naver.com', accessToken: '...', refreshToken: 'moved to cookie'}
     return action.payload
   }
 

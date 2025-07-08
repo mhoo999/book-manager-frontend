@@ -1,7 +1,15 @@
 import { Navigate, useParams } from 'react-router-dom'
+import useCustomLogin from '../../hooks/useCustomLogin'
 
 const MyPage = () => {
+  const { isLogin, moveToLoginReturn } = useCustomLogin()
   const { id } = useParams()
+
+  if (!isLogin) {
+    alert('로그인후 사용할 수 있습니다.')
+    return moveToLoginReturn()
+  }
+
   const isLoggedIn = false
 
   if (!isLoggedIn) {

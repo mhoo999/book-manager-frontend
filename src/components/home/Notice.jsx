@@ -59,7 +59,7 @@ const Notice = () => {
     <NoticeContainer>
       <h3>공지사항</h3>
       <ul>
-        {notices.map((n) => (
+        {notices.slice(0, 4).map((n) => (
           <NoticeItem
             key={n.noticeId}
             noticeId={n.noticeId}

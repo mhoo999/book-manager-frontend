@@ -2,8 +2,10 @@ import styled from 'styled-components'
 import useInputs from '../../hooks/useInputs'
 import { useDispatch } from 'react-redux'
 import { login } from '../../slices/loginSlice'
-import { Link, replace, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import useCustomLogin from '../../hooks/useCustomLogin'
+import Modal from '../common/Modal'
+import { useRef, useState } from 'react'
 
 const Container = styled.main`
   max-width: 640px;
@@ -81,29 +83,33 @@ const initState = {
 }
 
 const Login = () => {
+  const [modalAgain, setModalAgain] = useState(false) //모달창 열고 닫는 변수
   const [loginParam, onChange, reset] = useInputs(initState)
   const { doLogin, moveToPath } = useCustomLogin()
+  const dispatch = useDispatch()
 
   const { email, pw } = loginParam
 
   const handleClickLogin = () => {
-    doLogin(loginParam).then((data) => {
-      console.log('data=', data)
+    doLogin(loginParam).then((res) => {
+      console.log('res=', res)
 
-      if (data.accessToken) {
-        localStorage.setItem('accessToken', data.accessToken)
-      }
-
-      if (data.error) {
-        alert(
-          '입력하신 이메일 또는 비밀번호가 올바르지 않습니다.\n다시한번 확인해 주세요',
-        )
+      // if (res.error) {
+      if (res === undefined) {
+        setModalAgain(true)
         reset()
       } else {
-        alert('로그인 성공~!')
+        if (res.accessToken) {
+          dispatch(login(res))
+        }
+
         moveToPath('/')
       }
     })
+  }
+
+  const clseModalAgainFn = () => {
+    setModalAgain(false)
   }
 
   return (
@@ -138,6 +144,14 @@ const Login = () => {
           </ActionLinks>
         </Form>
       </Container>
+
+      <Modal
+        isOpen={modalAgain}
+        clseModalFn={clseModalAgainFn}
+        title="로그인 실패"
+      >
+        입력하신 이메일 또는 비밀번호가 올바르지 않습니다.
+      </Modal>
     </>
   )
 }

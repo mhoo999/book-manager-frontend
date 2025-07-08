@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom'
 import styled from 'styled-components'
+import useCustomLogin from '../../hooks/useCustomLogin'
 
 const HeaderContainer = styled.header`
   position: relative;
@@ -105,8 +106,9 @@ const BgLnb = styled.div`
 const Header = () => {
 
   const [showLnb, setShowLnb] = useState(false)
-  const loginState = useSelector((state) => state.loginSlice)
+  const { isLogin } = useCustomLogin()
 
+  console.log('isLogin =',isLogin)
   return (
     <HeaderContainer>
       <div>      
@@ -167,9 +169,9 @@ const Header = () => {
                 </ol>
               </li>
               <li>
-                {loginState.email ? 
-                <NavLink to={'/logout'} className={({isActive}) => isActive ? 'on' : undefined}>로그아웃</NavLink> :
-                <NavLink to={'/login'} className={({isActive}) => isActive ? 'on' : undefined}>로그인</NavLink> }
+                {isLogin? 
+                (<NavLink to={'/logout'} className={({isActive}) => isActive ? 'on' : undefined}>로그아웃</NavLink> ):
+                (<NavLink to={'/login'} className={({isActive}) => isActive ? 'on' : undefined}>로그인</NavLink>) }
               </li> 
             </ul>
           </Navigation>

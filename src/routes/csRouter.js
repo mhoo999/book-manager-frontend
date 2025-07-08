@@ -10,7 +10,7 @@ const csRouter = () => {
   return [
     {
       path: '',
-      element: <Navigate to={'notice'} replace />,
+      element: <Navigate to={'qna'} replace />,
     },
     {
       path: 'qna',
