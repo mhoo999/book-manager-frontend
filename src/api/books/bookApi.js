@@ -18,6 +18,7 @@ export const rentBook = async (bookId) => {
 export const bookInfo = async (bookId) => {
   try {
     const res = await jwtAxios.get(`${uriBooks}/${bookId}`)
+    console.log('res=', res)
     return res.data
   } catch (err) {
     console.error('bookInfo error:', err)
@@ -26,9 +27,10 @@ export const bookInfo = async (bookId) => {
 }
 
 // 📌 신규도서 (비인증)
-export const latestBook = async () => {
+export const bannerBook = async () => {
   try {
-    const res = await jwtAxios.get(`${uriBooks}/latest`)
+    const res = await jwtAxios.get(`${uriBooks}/home`)
+    console.log()
     return res.data
   } catch (err) {
     console.error('latestBook error:', err)
