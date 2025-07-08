@@ -99,75 +99,72 @@ const Pagination = styled.div`
   }
 `
 
+const QuestionItem = ({
+  num,
+  questionId,
+  title,
+  createdAt,
+  questionType,
+  userName,
+}) => {
+  return (
+    <tr>
+      <td>{num}</td>
+      <td>{questionType == 0 ? '오류신고' : '문의'}</td>
+      <td className="text-left">
+        <Link to={`${questionId}`}>{title}</Link>
+      </td>
+      <td>{userName}</td>
+      <td>{createdAt.slice(0, 10)}</td>
+    </tr>
+  )
+}
+
 const QnaPage = () => {
+  const { moveToList } = useCustomMove()
+  const [serverData, setServerData] = useState({})
+
+  useEffect(() => {
+    questionList().then((data) => {
+      setServerData(data)
+    })
+  }, [])
+
+  if (!serverData.questions || serverData.questions.length < 1) {
+    return <NoContent msg={`등록된 문의가 없습니다.`} />
+  }
   return (
     <>
-      <HeaderWrapper>
-        <InquiryButton href="#">문의하기</InquiryButton>
-      </HeaderWrapper>
+      <TableWrapper>
+        <QuestionTable>
+          <Thead>
+            <tr>
+              <th className="w-16">번호</th>
+              <th className="w-16">분류</th>
+              <th>제목</th>
+              <th className="w-32">작성자</th>
+              <th className="w-40">작성일</th>
+            </tr>
+          </Thead>
 
-      <Table>
-        <thead>
-          <tr>
-            <th className="w-16">번호</th>
-            <th>제목</th>
-            <th className="w-32">작성자</th>
-            <th className="w-40">작성일</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>5</td>
-            <td>도서 '자바의 정석'의 최신판은 언제 입고되나요?</td>
-            <td>홍길동</td>
-            <td>2025-06-15</td>
-          </tr>
-          <tr className="reply">
-            <td></td>
-            <td>↳ [답변] 자바의 정석 5판은 다음 주 입고 예정입니다.</td>
-            <td className="admin">관리자</td>
-            <td className="admin">2025-06-16</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>대여 중인 책은 연장 신청이 가능한가요?</td>
-            <td>장나라</td>
-            <td>2025-06-14</td>
-          </tr>
-          <tr className="reply">
-            <td></td>
-            <td>↳ [답변] 도서 연장은 1회에 한하여 가능합니다.</td>
-            <td className="admin">관리자</td>
-            <td className="admin">2025-06-14</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>'미움받을 용기' 책은 예약할 수 없나요?</td>
-            <td>김기태</td>
-            <td>2025-06-13</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>분실한 책은 어떻게 처리해야 하나요?</td>
-            <td>강호동</td>
-            <td>2025-06-12</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>전자책은 따로 대여가 가능한가요?</td>
-            <td>유재석</td>
-            <td>2025-06-11</td>
-          </tr>
-        </tbody>
-      </Table>
+          <Tbody>
+            {serverData.questions.map((q, idx) => (
+              <QuestionItem
+                questionId={q.questionId}
+                title={q.title}
+                createdAt={q.createdAt}
+                questionType={q.questionType}
+                userName={q.userName}
+                key={q.questionId}
+                num={idx + 1}
+              />
+            ))}
+          </Tbody>
+        </QuestionTable>
+      </TableWrapper>
 
-      <Pagination>
-        <button className="active">1</button>
-        <button>2</button>
-        <button>3</button>
-      </Pagination>
+      <Pagination serverData={serverData} movePage={moveToList} />
     </>
-  )
 }
 
 export default QnaPage
