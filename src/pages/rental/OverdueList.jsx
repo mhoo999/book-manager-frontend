@@ -41,7 +41,6 @@ const OverdueTable = styled.table`
   }
 `
 const OverdueList = () => {
-  const { isLogin, moveToLoginReturn } = useCustomLogin()
   const { moveToList } = useCustomMove()
 
   const [serverData, setServerData] = useState({ list: [] })
@@ -49,12 +48,7 @@ const OverdueList = () => {
     //여기에서 비동기로 데이터를 받아올 수 있도록 코드를 작성해 주세요
   }, [])
 
-  if (!isLogin) {
-    alert('로그인후 사용할 수 있습니다.')
-    return moveToLoginReturn()
-  }
-
-  if (!serverData.list && serverData.list.length < 1)
+  if (!serverData.list || serverData.list.length < 1)
     return <h2>미납 데이터가 없습니다.</h2>
   return (
     <OverdueContainer>

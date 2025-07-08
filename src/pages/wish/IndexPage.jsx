@@ -1,5 +1,7 @@
 import styled from 'styled-components'
-import WishList from './WishList'
+import BreadCrumb from '../../components/wish/BreadCrumb'
+import { Outlet } from 'react-router-dom'
+import useCustomLogin from '../../hooks/useCustomLogin'
 
 const WishContainer = styled.section`
   > h2 {
@@ -11,10 +13,19 @@ const WishContainer = styled.section`
     }
   }
 `
+
 const WishBook = () => {
+  const { isLogin, moveToLoginReturn } = useCustomLogin()
+
+  if (!isLogin) {
+    alert('로그인후 사용할 수 있습니다.')
+    return moveToLoginReturn()
+  }
+
   return (
     <WishContainer>
-      <WishList />
+      <BreadCrumb />
+      <Outlet />
     </WishContainer>
   )
 }

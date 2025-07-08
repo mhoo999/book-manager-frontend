@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 import useCustomLogin from '../../hooks/useCustomLogin'
 import { useEffect, useState } from 'react'
-import { latestBook } from '../../api/books/bookApi'
 import useCustomMove from '../../hooks/useCustomMove'
+import Pagination from '../../components/common/Pagination'
 
 const RentalContainer = styled.div`
   margin-top: 2rem;
@@ -68,27 +68,7 @@ const CancelButton = styled.button`
   }
 `
 
-const Pagination = styled.div`
-  margin-top: 1.5rem;
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-
-  button {
-    padding: 6px 12px;
-    border: 1px solid #ccc;
-    background-color: white;
-    border-radius: 4px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: #e0f2fe;
-    }
-  }
-`
-
 const RentalList = () => {
-  const { isLogin, moveToLoginReturn } = useCustomLogin()
   const { moveToList } = useCustomMove()
   const [serverData, setServerData] = useState({ list: [] })
 
@@ -96,12 +76,7 @@ const RentalList = () => {
     //여기에서 비동기로 데이터를 받아올 수 있도록 코드를 작성해 주세요
   }, [])
 
-  if (!isLogin) {
-    alert('로그인후 사용할 수 있습니다.')
-    return moveToLoginReturn()
-  }
-
-  if (!serverData.list && serverData.list.length < 1) {
+  if (!serverData.list || serverData.list.length < 1) {
     return <h2>대여 데이터가 없습니다.</h2>
   }
   return (
