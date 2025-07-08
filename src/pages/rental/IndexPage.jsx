@@ -1,6 +1,9 @@
 import styled from 'styled-components'
 import RentalList from './RentalList'
 import SearchForm from './SearchForm'
+import { useState } from 'react'
+import BreadCrumb from '../../components/rental/BreadCrumb'
+import { Outlet } from 'react-router-dom'
 
 const rentals = [
   {
@@ -85,12 +88,12 @@ const RentalContainer = styled.section`
     }
   }
 `
+
 const RentalState = () => {
   return (
     <RentalContainer>
-      <h2>📖 대여목록</h2>
-      <SearchForm />
-      <RentalList rentals={rentals} />
+      <BreadCrumb />
+      <Outlet />
     </RentalContainer>
   )
 }

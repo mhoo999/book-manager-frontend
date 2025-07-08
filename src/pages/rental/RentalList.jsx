@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 import useCustomLogin from '../../hooks/useCustomLogin'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { latestBook } from '../../api/books/bookApi'
+import useCustomMove from '../../hooks/useCustomMove'
 
 const RentalContainer = styled.div`
   margin-top: 2rem;
@@ -86,14 +87,23 @@ const Pagination = styled.div`
   }
 `
 
-const RentalList = ({ rentals }) => {
+const RentalList = () => {
   const { isLogin, moveToLoginReturn } = useCustomLogin()
+  const { moveToList } = useCustomMove()
+  const [serverData, setServerData] = useState({ list: [] })
+
+  useEffect(() => {
+    //여기에서 비동기로 데이터를 받아올 수 있도록 코드를 작성해 주세요
+  }, [])
 
   if (!isLogin) {
     alert('로그인후 사용할 수 있습니다.')
     return moveToLoginReturn()
   }
 
+  if (!serverData.list && serverData.list.length < 1) {
+    return <h2>대여 데이터가 없습니다.</h2>
+  }
   return (
     <RentalContainer>
       <FilterBox>
@@ -117,7 +127,7 @@ const RentalList = ({ rentals }) => {
           </tr>
         </thead>
         <tbody>
-          {rentals.map((book, i) => (
+          {serverData.list.map((book, i) => (
             <tr key={i}>
               <td>{book.title}</td>
               <td>{book.author}</td>
@@ -146,11 +156,7 @@ const RentalList = ({ rentals }) => {
         </tbody>
       </RentalTable>
 
-      <Pagination>
-        {[1, 2, 3, 4, 5].map((n) => (
-          <button key={n}>{n}</button>
-        ))}
-      </Pagination>
+      <Pagination serverData={serverData} movePage={moveToList} />
     </RentalContainer>
   )
 }
