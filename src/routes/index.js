@@ -5,6 +5,8 @@ import Layout from '../layout/Layout'
 import searchRouter from './searchRouter'
 import csRouter from './csRouter'
 import rentalRouter from './rentalRouter'
+import wishRouter from './wishRouter'
+import mypageRouter from './mypageRouter'
 
 //Suspense와 lazy를 이용한 Code-Splitting
 const ErrorPage = lazy(() => import('../pages/ErrorPage'))
@@ -51,6 +53,7 @@ const router = createBrowserRouter([
       {
         path: 'wish',
         element: <WishBook />,
+        children: wishRouter(),
       },
       {
         path: 'cs',
@@ -58,8 +61,9 @@ const router = createBrowserRouter([
         children: csRouter(),
       },
       {
-        path: 'mypage/:id',
+        path: 'mypage',
         element: <MyPage />,
+        children: mypageRouter(),
       },
       {
         path: 'login',

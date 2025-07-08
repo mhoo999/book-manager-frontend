@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 import useCustomLogin from '../../hooks/useCustomLogin'
 import { useEffect, useState } from 'react'
-import { latestBook } from '../../api/books/bookApi'
 import useCustomMove from '../../hooks/useCustomMove'
+import Pagination from '../../components/common/Pagination'
 
 const RentalContainer = styled.div`
   margin-top: 2rem;
@@ -65,25 +65,6 @@ const CancelButton = styled.button`
 
   &:hover {
     background-color: #dc2626;
-  }
-`
-
-const Pagination = styled.div`
-  margin-top: 1.5rem;
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-
-  button {
-    padding: 6px 12px;
-    border: 1px solid #ccc;
-    background-color: white;
-    border-radius: 4px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: #e0f2fe;
-    }
   }
 `
 

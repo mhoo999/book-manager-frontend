@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import WishList from './WishList'
+import BreadCrumb from '../../components/wish/BreadCrumb'
+import { Outlet } from 'react-router-dom'
 
 const WishContainer = styled.section`
   > h2 {
@@ -11,10 +12,12 @@ const WishContainer = styled.section`
     }
   }
 `
+
 const WishBook = () => {
   return (
     <WishContainer>
-      <WishList />
+      <BreadCrumb />
+      <Outlet />
     </WishContainer>
   )
 }
