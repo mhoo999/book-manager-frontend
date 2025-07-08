@@ -2,7 +2,11 @@ import { useRef, useState } from 'react'
 import styled from 'styled-components'
 import useInputs from '../../hooks/useInputs'
 
-import { createSearchParams, useNavigate } from 'react-router-dom'
+import {
+  createSearchParams,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom'
 import Modal from '../common/Modal'
 
 const SearchFormContainer = styled.div`
@@ -45,6 +49,7 @@ const SearchFormContainer = styled.div`
 `
 
 const SearchForm = () => {
+  const [searchParam] = useSearchParams()
   const navigate = useNavigate()
   const [form, onChange, reset] = useInputs({
     type: 'title',
@@ -83,7 +88,11 @@ const SearchForm = () => {
 
       <SearchFormContainer>
         <form onSubmit={onSubmit}>
-          <select name="type" onChange={onChange} value={type}>
+          <select
+            name="type"
+            onChange={onChange}
+            value={searchParam.get(type) ?? 'title'}
+          >
             <option value="title">도서명</option>
             <option value="author">저자명</option>
           </select>

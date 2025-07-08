@@ -148,10 +148,13 @@ const BookPage = () => {
   useEffect(() => {
     //서버요청
     bookInfo(bookId).then((res) => {
-      setBook(res.data)
+      setBook(res)
     })
   }, [bookId])
 
+  useEffect(() => {
+    console.log('book=', book)
+  }, [book])
   if (!book || !book.title) return <Loading />
 
   return (
