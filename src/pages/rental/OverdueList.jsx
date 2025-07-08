@@ -54,7 +54,7 @@ const OverdueList = () => {
     return moveToLoginReturn()
   }
 
-  if (!serverData.list && serverData.list.length < 1)
+  if (!serverData.list || serverData.list.length < 1)
     return <h2>미납 데이터가 없습니다.</h2>
   return (
     <OverdueContainer>

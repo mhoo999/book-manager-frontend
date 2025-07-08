@@ -3,6 +3,7 @@ import useCustomLogin from '../../hooks/useCustomLogin'
 import { useEffect, useState } from 'react'
 import useCustomMove from '../../hooks/useCustomMove'
 import Pagination from '../../components/common/Pagination'
+import { Link } from 'react-router-dom'
 
 const WishContainer = styled.div`
   max-width: 1280px;
@@ -35,6 +36,7 @@ const Table = styled.table`
   }
 
   td button {
+    display: inline-block;
     font-size: 13px;
     color: #dc2626;
     border: 1px solid #ef4444;
@@ -58,10 +60,10 @@ const WishList = () => {
     //여기에서 비동기로 데이터를 받아올 수 있도록 코드를 작성해 주세요
   }, [])
 
-  // if (!isLogin) {
-  //   alert('로그인후 사용할 수 있습니다.')
-  //   return moveToLoginReturn()
-  // }
+  if (!isLogin) {
+    alert('로그인후 사용할 수 있습니다.')
+    return moveToLoginReturn()
+  }
 
   if (!serverData.list && serverData.list.length < 1) {
     return <h2>대여 데이터가 없습니다.</h2>
@@ -83,7 +85,9 @@ const WishList = () => {
           <tbody>
             <tr>
               <td>2025-06-15</td>
-              <td>어린왕자와 철학자들</td>
+              <td>
+                <Link to={'../1'}>어린왕자와 철학자들</Link>
+              </td>
               <td>김철수</td>
               <td>인문출판사</td>
               <td>
@@ -95,28 +99,36 @@ const WishList = () => {
             </tr>
             <tr>
               <td>2025-06-14</td>
-              <td>과학으로 읽는 어린왕자</td>
+              <td>
+                <Link to={'../1'}>과학으로 읽는 어린왕자</Link>
+              </td>
               <td>박지현</td>
               <td>지식너머</td>
               <td style={{ color: 'green', fontWeight: 'bold' }}>승인됨</td>
             </tr>
             <tr>
               <td>2025-06-12</td>
-              <td>어린왕자 다시 읽기</td>
+              <td>
+                <Link to={'../1'}>어린왕자 다시 읽기</Link>
+              </td>
               <td>이민호</td>
               <td>문학나무</td>
               <td style={{ color: '#ca8a04', fontWeight: 'bold' }}>구매중</td>
             </tr>
             <tr>
               <td>2025-06-10</td>
-              <td>어린왕자 해설서</td>
+              <td>
+                <Link to={'../1'}>어린왕자 해설서</Link>
+              </td>
               <td>최윤정</td>
               <td>책읽는세상</td>
               <td style={{ color: '#7c3aed', fontWeight: 'bold' }}>입고완료</td>
             </tr>
             <tr>
               <td>2025-06-08</td>
-              <td>어린왕자와 인간관계</td>
+              <td>
+                <Link to={'../1'}>어린왕자와 인간관계</Link>
+              </td>
               <td>정하늘</td>
               <td>힐링북스</td>
               <td style={{ color: '#dc2626', fontWeight: 'bold' }}>반려됨</td>
