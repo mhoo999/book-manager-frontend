@@ -78,7 +78,7 @@ const NoticeContent = () => {
             <strong>작성일:</strong> {notice.createdAt.slice(0, 10)}
           </div>
           <div>
-            <strong>종류:</strong> {notice.type === 1 && '일반'}
+            <strong>종류:</strong> {notice.typeLabel}
           </div>
         </MetaInfo>
         <NoticeCont>{notice.content}</NoticeCont>
