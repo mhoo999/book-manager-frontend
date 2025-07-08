@@ -1,17 +1,70 @@
-import React from 'react'
-import {
-  Title,
-  TableWrapper,
-  Table,
-  CancelButton,
-  Pagination,
-} from './StyledWishTable'
+import styled from 'styled-components'
+import useCustomLogin from '../../hooks/useCustomLogin'
+import { useEffect, useState } from 'react'
+import useCustomMove from '../../hooks/useCustomMove'
+import Pagination from '../../components/common/Pagination'
+import { Link } from 'react-router-dom'
+
+const WishContainer = styled.div`
+  max-width: 1280px;
+  margin: 40px auto;
+  padding: 0 16px;
+`
+
+const TableWrapper = styled.div`
+  overflow-x: auto;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+`
+
+const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+
+  thead {
+    background-color: #f3f4f6;
+    color: #374151;
+  }
+
+  th,
+  td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  td button {
+    display: inline-block;
+    font-size: 13px;
+    color: #dc2626;
+    border: 1px solid #ef4444;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #fef2f2;
+    }
+  }
+`
 
 const WishList = () => {
-  return (
-    <>
-      <Title>📦 신청목록</Title>
+  const { moveToList } = useCustomMove()
+  const [serverData, setServerData] = useState({ list: [] })
 
+  useEffect(() => {
+    //여기에서 비동기로 데이터를 받아올 수 있도록 코드를 작성해 주세요
+  }, [])
+
+  if (!serverData.list || serverData.list.length < 1) {
+    return <h2>대여 데이터가 없습니다.</h2>
+  }
+
+  return (
+    <WishContainer>
       <TableWrapper>
         <Table>
           <thead>
@@ -26,54 +79,60 @@ const WishList = () => {
           <tbody>
             <tr>
               <td>2025-06-15</td>
-              <td>어린왕자와 철학자들</td>
+              <td>
+                <Link to={'../1'}>어린왕자와 철학자들</Link>
+              </td>
               <td>김철수</td>
               <td>인문출판사</td>
-              <td className="status blue">
-                <span>검토중</span>
-                <CancelButton>취소</CancelButton>
+              <td>
+                <span style={{ color: '#2563eb', fontWeight: 'bold' }}>
+                  검토중
+                </span>{' '}
+                <button>취소</button>
               </td>
             </tr>
             <tr>
               <td>2025-06-14</td>
-              <td>과학으로 읽는 어린왕자</td>
+              <td>
+                <Link to={'../1'}>과학으로 읽는 어린왕자</Link>
+              </td>
               <td>박지현</td>
               <td>지식너머</td>
-              <td className="green">승인됨</td>
+              <td style={{ color: 'green', fontWeight: 'bold' }}>승인됨</td>
             </tr>
             <tr>
               <td>2025-06-12</td>
-              <td>어린왕자 다시 읽기</td>
+              <td>
+                <Link to={'../1'}>어린왕자 다시 읽기</Link>
+              </td>
               <td>이민호</td>
               <td>문학나무</td>
-              <td className="yellow">구매중</td>
+              <td style={{ color: '#ca8a04', fontWeight: 'bold' }}>구매중</td>
             </tr>
             <tr>
               <td>2025-06-10</td>
-              <td>어린왕자 해설서</td>
+              <td>
+                <Link to={'../1'}>어린왕자 해설서</Link>
+              </td>
               <td>최윤정</td>
               <td>책읽는세상</td>
-              <td className="purple">입고완료</td>
+              <td style={{ color: '#7c3aed', fontWeight: 'bold' }}>입고완료</td>
             </tr>
             <tr>
               <td>2025-06-08</td>
-              <td>어린왕자와 인간관계</td>
+              <td>
+                <Link to={'../1'}>어린왕자와 인간관계</Link>
+              </td>
               <td>정하늘</td>
               <td>힐링북스</td>
-              <td className="red">반려됨</td>
+              <td style={{ color: '#dc2626', fontWeight: 'bold' }}>반려됨</td>
             </tr>
           </tbody>
         </Table>
       </TableWrapper>
 
-      <Pagination>
-        <button className="active">1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>4</button>
-        <button>5</button>
-      </Pagination>
-    </>
+      <Pagination serverData={serverData} movePage={moveToList} />
+    </WishContainer>
   )
 }
 

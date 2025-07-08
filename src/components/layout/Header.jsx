@@ -161,11 +161,11 @@ const Header = () => {
                 </ol>
               </li>
               <li>
-                <NavLink to={'/mypage/duly'} className={({isActive}) => isActive ? 'on' : undefined}>마이페이지</NavLink>
+                <NavLink to={'/mypage'} className={({isActive}) => isActive ? 'on' : undefined}>마이페이지</NavLink>
                 <ol className="lnb">
+                  <li><Link to={'/mypage/dash'}>대시보드</Link></li>
                   <li><Link to={'/mypage/info'}>내정보</Link></li>
-                  <li><Link to={'/mypage/settings'}>정보수정</Link></li>
-                  <li><Link to={'/mypage/unsubscribe'}>회원탈퇴</Link></li>
+                  <li><Link to={'/mypage/withdraw'}>회원탈퇴</Link></li>
                 </ol>
               </li>
               <li>
