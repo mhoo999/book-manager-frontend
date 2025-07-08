@@ -1,4 +1,7 @@
 import styled from 'styled-components'
+import useCustomLogin from '../../hooks/useCustomLogin'
+import { useEffect } from 'react'
+import { latestBook } from '../../api/books/bookApi'
 
 const RentalContainer = styled.div`
   margin-top: 2rem;
@@ -84,6 +87,15 @@ const Pagination = styled.div`
 `
 
 const RentalList = ({ rentals }) => {
+  const { exceptionHandle } = useCustomLogin()
+
+  useEffect(() => {
+    //서버요청
+    latestBook()
+      .then((data) => {})
+      .catch((err) => exceptionHandle(err))
+  }, [])
+
   return (
     <RentalContainer>
       <FilterBox>

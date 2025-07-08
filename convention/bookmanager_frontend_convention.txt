@@ -1,0 +1,7 @@
+1. pages 폴더는 주로 라우팅처리를 위한 컴포넌트
+  1) GNB는 pages>도메인>IndexPage.jsx
+  2) LNB는 pages>도메인>ㅇㅇComponent.jsx 
+  3) components>도메인>ㅇㅇ.jsx 로 구성해서 기능별 UI 컴포넌트 구현 
+
+2. CustomHook
+  1) 컴포넌트 내부에서 만들어지는 공통적인 코드는 Custom Hook 작성
