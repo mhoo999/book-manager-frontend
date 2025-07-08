@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { bannerBook } from '../../api/books/bookApi'
 
@@ -74,10 +74,10 @@ const Container = styled.article`
   }
 `
 
-const Book = ({ src, title, desc }) => {
+const Book = ({ id, src, title, desc }) => {
   return (
     <div>
-      <Link to={''}>
+      <Link to={`./books/${id}`}>
         <img src={src} />
         <h3>{title}</h3>
         <p>{desc}</p>
@@ -87,6 +87,7 @@ const Book = ({ src, title, desc }) => {
 }
 
 const Banner = () => {
+  const navigate = useNavigate()
   const [serverData, setServerData] = useState({ data: [] })
 
   useEffect(() => {
@@ -106,6 +107,7 @@ const Banner = () => {
       <Container>
         {serverData.data.map((book) => (
           <Book
+            id={book.bookId}
             src={book.cover}
             title={book.title}
             desc={book.desc}

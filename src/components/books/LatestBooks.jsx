@@ -75,10 +75,10 @@ const Container = styled.article`
   }
 `
 
-const Book = ({ src, title, desc }) => {
+const Book = ({ id, src, title, desc }) => {
   return (
     <div>
-      <Link to={''}>
+      <Link to={`./${id}`}>
         <img src={src} />
         <h3>{title}</h3>
         <p>{desc}</p>
@@ -108,6 +108,7 @@ const LatestBooks = () => {
       <Container>
         {serverData.data.map((book, idx) => (
           <Book
+            id={book.bookId}
             src={book.cover}
             title={book.title}
             desc={book.description}

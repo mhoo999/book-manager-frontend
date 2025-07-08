@@ -167,13 +167,11 @@ const SearchPage = () => {
               })
             }
           >
-            {/* <Link to={{ pathname: '../info', state: { bookId: book.bookId } }}> */}
             <img src={book.cover} alt={book.title} />
             <h3>{book.title}</h3>
             <p>
               {book.author} | {book.publisher}
             </p>
-            {/* </Link> */}
           </BookCard>
         ))}
       </BookGrid>
