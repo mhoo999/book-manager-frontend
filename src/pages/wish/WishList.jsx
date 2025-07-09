@@ -91,7 +91,6 @@ const WishItem = ({
       <td>{publisher}</td>
       <td>
         <StatusLabel status={status}>{statusLabel}</StatusLabel>{' '}
-        {status === 1 && <button>취소</button>}
       </td>
     </tr>
   )
