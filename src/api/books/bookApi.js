@@ -2,6 +2,7 @@ import jwtAxios from '../../util/jwtUtil'
 
 export const API_SERVER_HOST = 'http://localhost:8080'
 const uriBooks = `${API_SERVER_HOST}/api/v1/books`
+const uriRent = `${API_SERVER_HOST}/api/v1/rent`
 
 // 📌 대여신청 (인증 필요)
 export const rentBook = async (bookId) => {
@@ -56,3 +57,29 @@ export const searchBook = async (obj) => {
     return { books: [] }
   }
 }
+
+// 📌 도서 대여신청 (인증 필요)
+export const rentRegister = async (bookCode) => {
+  try {
+    const res = await jwtAxios.post(`${API_SERVER_HOST}/api/v1/rent/register`, {
+      bookCode,
+    })
+    return res.data
+  } catch (err) {
+    console.error('rentRegister error:', err)
+    return { error: '대여신청 실패' }
+  }
+}
+
+// 전체 도서 목록(페이지네이션)
+export const fetchBooks = async ({ page = 1, size = 10 } = {}) => {
+  try {
+    const res = await jwtAxios.get(`${uriBooks}`, {
+      params: { page, size },
+    });
+    return res.data;
+  } catch (err) {
+    console.error('fetchBooks error:', err);
+    return { books: [] };
+  }
+};

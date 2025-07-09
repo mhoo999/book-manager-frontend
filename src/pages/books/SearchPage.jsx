@@ -5,7 +5,7 @@ import {
   useSearchParams,
 } from 'react-router-dom'
 import styled from 'styled-components'
-import { searchBook } from '../../api/books/bookApi'
+import { searchBook, fetchBooks } from '../../api/books/bookApi'
 import Pagination from '../../components/common/Pagination'
 import useCustomMove from '../../hooks/useCustomMove'
 import NoContent from '../../components/common/NoContent'
@@ -125,21 +125,26 @@ const SearchPage = () => {
   const [searchParams] = useSearchParams()
   const type = searchParams.get('type')
   const keyword = searchParams.get('keyword')
+  const page = parseInt(searchParams.get('page')) || 1
+  const size = parseInt(searchParams.get('size')) || 10
+  const { moveToList, moveToRead } = useCustomMove()
 
   // const [books, setBooks] = useState([])
   const [serverData, setServerData] = useState({ books: [] })
-  const { moveToList, moveToRead, page, size, refresh } = useCustomMove()
 
   useEffect(() => {
-    if (!keyword) return
-    const params = { type, keyword }
-
-    //서버요청
+    const realKeyword = keyword ?? ''
+    const params = { type: type ?? '', keyword: realKeyword }
     searchBook(params).then((data) => {
-      // setBooks(data.books)
-      setServerData(data)
+      setServerData({
+        books: data.books || [],
+        page: data.page,
+        size: data.size,
+        totalCount: data.totalCount,
+        totalPages: data.totalPages,
+      })
     })
-  }, [type, keyword])
+  }, [type, keyword, page, size])
 
   useEffect(() => {
     // console.log('북스=', serverData.books)

@@ -25,6 +25,7 @@ const useCustomMove = () => {
   const [refresh, setRefresh] = useState(false)
 
   const moveToList = (pageParam) => {
+    let queryString = ''
     if (pageParam) {
       const pageNum = getNum(pageParam.page, 1)
       const sizeNum = getNum(pageParam.size, 10)
@@ -32,12 +33,11 @@ const useCustomMove = () => {
         page: pageNum,
         size: sizeNum,
       }).toString()
+      navigate(`/books/search?${queryString}`)
     } else {
-      navigate({ pathname: '../search' })
-      //../search는 현재 경로에서 한 디렉터리 위로 올라간 다음 list로 이동하는 의미. 결과: /books/search
+      // pageParam이 없을 때도 항상 /books/search로 이동
+      navigate(`/books/search`)
     }
-    setRefresh((prev) => !prev)
-    navigate({ pathname: '../search', search: queryString })
   }
 
   const moveToRead = (bookId) => {

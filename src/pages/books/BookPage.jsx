@@ -5,7 +5,7 @@ import {
   useParams,
   useSearchParams,
 } from 'react-router-dom'
-import { bookInfo } from '../../api/books/bookApi'
+import { bookInfo, rentRegister } from '../../api/books/bookApi'
 import styled from 'styled-components'
 import Loading from '../Loading'
 
@@ -157,6 +157,20 @@ const BookPage = () => {
   }, [book])
   if (!book || !book.title) return <Loading />
 
+  // book.books 중 대여 가능 여부 계산
+  const isAnyBookAvailable = Array.isArray(book.books) && book.books.some((b) => b.status === 'AVAILABLE')
+
+  // 대여신청 핸들러
+  const handleRent = async (bookCode) => {
+    const result = await rentRegister(bookCode)
+    if (result && !result.error) {
+      alert('대여신청이 완료되었습니다.')
+      // 필요시 상태 갱신
+    } else {
+      alert(result.error || '대여신청에 실패했습니다.')
+    }
+  }
+
   return (
     <>
       <SectionTitle>📖 도서정보</SectionTitle>
@@ -185,7 +199,7 @@ const BookPage = () => {
           </p>
           <p>
             <strong>대여 상태:</strong>{' '}
-            {book.stock > 0 ? (
+            {isAnyBookAvailable ? (
               <span className="available">✔ 대여 가능</span>
             ) : (
               '⛔ 대여불가 (재고없음)'
@@ -221,7 +235,16 @@ const BookPage = () => {
                       : '대여불가'}
                 </td>
                 <td>
-                  <span className="btn">대여신청</span>
+                  <span
+                    className="btn"
+                    style={{
+                      opacity: b.status === 'AVAILABLE' ? 1 : 0.5,
+                      pointerEvents: b.status === 'AVAILABLE' ? 'auto' : 'none',
+                    }}
+                    onClick={() => b.status === 'AVAILABLE' && handleRent(b.bookCode)}
+                  >
+                    대여신청
+                  </span>
                 </td>
               </tr>
             ))}

@@ -101,6 +101,7 @@ const RentalState = () => {
   return (
     <RentalContainer>
       <BreadCrumb />
+      <RentalList />
       <Outlet />
     </RentalContainer>
   )
