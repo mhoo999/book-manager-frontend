@@ -165,6 +165,7 @@ const QnaPage = () => {
 
       <Pagination serverData={serverData} movePage={moveToList} />
     </>
+  )
 }
 
 export default QnaPage
