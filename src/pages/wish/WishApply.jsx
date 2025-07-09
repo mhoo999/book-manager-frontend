@@ -90,7 +90,7 @@ const WishApply = () => {
       console.log('보낼 데이터:', form)
       const response = await jwtAxios.post('/api/wish/create', form)
       console.log('응답 바디:', response.data)
-      navigate('/wish/list')
+      navigate('/wish')
     } catch (error) {
       console.error('신청 실패:', error)
     }
