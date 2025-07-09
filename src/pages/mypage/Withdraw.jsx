@@ -1,4 +1,8 @@
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import jwtAxios from '../../util/jwtUtil'
+import { useDispatch } from 'react-redux'
+import { logout } from '../../slices/loginSlice'
 
 const WithdrawContainer = styled.div`
   max-width: 1280px;
@@ -47,6 +51,24 @@ const ButtonGroup = styled.div`
 `
 
 const Withdraw = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const handleWithdraw = async () => {
+    const confirmed = window.confirm('정말로 탈퇴하시겠습니까?')
+    if (!confirmed) return
+
+    try {
+      await jwtAxios.delete('/api/user/withdraw') // 실제 API 경로 맞춰줘!
+      alert('회원 탈퇴가 완료되었습니다.')
+      localStorage.removeItem('member')
+      dispatch(logout())
+      navigate('/login')
+    } catch (error) {
+      console.error(error)
+      alert('회원 탈퇴에 실패했습니다.')
+    }
+  }
   return (
     <WithdrawContainer>
       <Box>
@@ -78,7 +100,7 @@ const Withdraw = () => {
           </p>
         </div>
         <ButtonGroup>
-          <button>탈퇴하기</button>
+          <button onClick={handleWithdraw}>탈퇴하기</button>
         </ButtonGroup>
       </Box>
     </WithdrawContainer>
