@@ -1,6 +1,7 @@
 import Board from '../../components/home/Board'
 import Banner from '../../components/home/Banner'
 import SearchForm from '../../components/books/SearchForm'
+import LatestBooks from '../../components/books/LatestBooks'
 import styled from 'styled-components'
 
 const BookSearch = styled.section`
@@ -18,6 +19,7 @@ const Home = () => {
         <SearchForm />
       </BookSearch>
       <Board />
+      <LatestBooks />
       <Banner />
     </>
   )

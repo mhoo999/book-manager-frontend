@@ -48,7 +48,6 @@ const SearchBook = () => {
       {bookId ? <></> : <SearchForm />}
 
       <Outlet />
-      {bookId ? <></> : <LatestBooks />}
     </SearchContainer>
   )
 }

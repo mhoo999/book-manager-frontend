@@ -38,6 +38,11 @@ const RentalTable = styled.table`
     text-align: left;
   }
 
+  tbody tr {
+    min-height: 64px;
+    height: 64px;
+  }
+
   .text-red {
     color: #ef4444;
     font-weight: 500;

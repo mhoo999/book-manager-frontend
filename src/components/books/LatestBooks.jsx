@@ -78,7 +78,7 @@ const Container = styled.article`
 const Book = ({ id, src, title, desc }) => {
   return (
     <div>
-      <Link to={`./${id}`}>
+      <Link to={`/books/${id}`}>
         <img src={src} />
         <h3>{title}</h3>
         <p>{desc}</p>
