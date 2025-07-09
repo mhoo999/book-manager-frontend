@@ -35,14 +35,14 @@ const BreadCrumb = () => {
   return (
     <Menu>
       <NavLink
-        to="/rental/search"
+        to="search"
         className={({ isActive }) => (!isOverdue && isActive ? 'on' : '')}
         end
       >
         📄 대여목록
       </NavLink>
       <NavLink
-        to="/rental/over"
+        to="over"
         className={({ isActive }) => (isOverdue && isActive ? 'on' : '')}
       >
         ⏰ 미납도서
