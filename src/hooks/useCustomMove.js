@@ -3,6 +3,7 @@ import {
   createSearchParams,
   useNavigate,
   useSearchParams,
+  useLocation,
 } from 'react-router-dom'
 
 const useCustomMove = () => {
@@ -19,6 +20,7 @@ const useCustomMove = () => {
   const queryDefault = createSearchParams({ page, size }).toString()
 
   const navigate = useNavigate()
+  const location = useLocation()
   let queryString = ''
 
   //현재페이지번호를 클릭해도 서버에 데이터를 요청하기 위한 상태변수
@@ -33,10 +35,17 @@ const useCustomMove = () => {
         page: pageNum,
         size: sizeNum,
       }).toString()
-      navigate(`/books/search?${queryString}`)
+      if (location.pathname.startsWith('/rental')) {
+        navigate(`/rental/search?${queryString}`)
+      } else if (location.pathname.startsWith('/books')) {
+        navigate(`/books/search?${queryString}`)
+      }
     } else {
-      // pageParam이 없을 때도 항상 /books/search로 이동
-      navigate(`/books/search`)
+      if (location.pathname.startsWith('/rental')) {
+        navigate(`/rental/search`)
+      } else if (location.pathname.startsWith('/books')) {
+        navigate(`/books/search`)
+      }
     }
   }
 

@@ -86,3 +86,34 @@ export const fetchBooks = async ({ page = 1, size = 10 } = {}) => {
     return { books: [] };
   }
 };
+
+// 로그인한 유저의 렌탈 정보(페이지네이션)
+export const fetchRents = async ({ page = 1, size = 10, rentStatus = '' } = {}) => {
+  try {
+    const res = await jwtAxios.get(`${API_SERVER_HOST}/api/v1/rents/search`, {
+      params: { page, size, rentStatus },
+    })
+    const data = res.data
+    return {
+      list: data.rents || [],
+      page: (data.page ?? 0) + 1,
+      size: data.size,
+      totalCount: data.totalCount,
+      totalPages: data.totalPages,
+    }
+  } catch (err) {
+    console.error('fetchRents error:', err)
+    return { list: [] }
+  }
+}
+
+// 개별 대여 상세 정보
+export const fetchRentDetail = async (rentId) => {
+  try {
+    const res = await jwtAxios.get(`${API_SERVER_HOST}/api/v1/rents/${rentId}`)
+    return res.data
+  } catch (err) {
+    console.error('fetchRentDetail error:', err)
+    return null
+  }
+}

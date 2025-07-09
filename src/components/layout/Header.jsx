@@ -141,7 +141,7 @@ const Header = () => {
               <li>
                 <NavLink to={'/rental'} className={({isActive}) => isActive ? 'on' : undefined}>대여현황</NavLink>
                 <ol className="lnb">
-                  <li><Link to={'/rental/list'}>대여목록</Link></li>
+                  <li><Link to={'/rental/search'}>대여목록</Link></li>
                   <li><Link to={'/rental/over'}>미납도서</Link></li>
                 </ol>
               </li>

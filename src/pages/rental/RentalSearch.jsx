@@ -3,6 +3,8 @@ import useCustomLogin from '../../hooks/useCustomLogin'
 import { useEffect, useState } from 'react'
 import useCustomMove from '../../hooks/useCustomMove'
 import Pagination from '../../components/common/Pagination'
+import { fetchRents } from '../../api/books/bookApi'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 
 const RentalContainer = styled.div`
   margin-top: 2rem;
@@ -68,13 +70,24 @@ const CancelButton = styled.button`
   }
 `
 
-const RentalList = () => {
-  const { moveToList } = useCustomMove()
+const RENT_STATUS_OPTIONS = [
+  { value: '', label: '전체보기' },
+  { value: 'REQUESTED', label: '대여요청' },
+  { value: 'RENTED', label: '대여중' },
+  { value: 'RETURNED', label: '반납완료' },
+  { value: 'OVERDUE', label: '미납' },
+]
+
+const RentalSearch = () => {
+  const { moveToList, page, size } = useCustomMove()
   const [serverData, setServerData] = useState({ list: [] })
+  const [rentStatus, setRentStatus] = useState('')
 
   useEffect(() => {
-    //여기에서 비동기로 데이터를 받아올 수 있도록 코드를 작성해 주세요
-  }, [])
+    fetchRents({ page: page - 1, size, rentStatus }).then((data) => {
+      setServerData(data)
+    })
+  }, [page, size, rentStatus])
 
   if (!serverData.list || serverData.list.length < 1) {
     return <h2>대여 데이터가 없습니다.</h2>
@@ -82,12 +95,10 @@ const RentalList = () => {
   return (
     <RentalContainer>
       <FilterBox>
-        <select>
-          <option value="">전체보기</option>
-          <option value="대여요청">대여요청</option>
-          <option value="대여중">대여중</option>
-          <option value="반납완료">반납완료</option>
-          <option value="미납">미납</option>
+        <select value={rentStatus} onChange={e => setRentStatus(e.target.value)}>
+          {RENT_STATUS_OPTIONS.map(opt => (
+            <option key={opt.value} value={opt.value}>{opt.label}</option>
+          ))}
         </select>
       </FilterBox>
 
@@ -95,36 +106,25 @@ const RentalList = () => {
         <thead>
           <tr>
             <th>도서명</th>
-            <th>저자</th>
             <th>대여일</th>
             <th>반납예정일</th>
             <th>상태</th>
           </tr>
         </thead>
         <tbody>
-          {serverData.list.map((book, i) => (
-            <tr key={i}>
-              <td>{book.title}</td>
-              <td>{book.author}</td>
-              <td>{book.rentDate}</td>
-              <td>{book.returnDate}</td>
-              <td
-                className={
-                  book.status === '미납'
-                    ? 'text-red'
-                    : book.status === '대여중'
-                      ? 'text-green'
-                      : 'text-gray'
-                }
-              >
-                {book.status === '대여요청' ? (
-                  <>
-                    <span>{book.status}</span>
-                    <CancelButton>취소</CancelButton>
-                  </>
-                ) : (
-                  <span>{book.status}</span>
-                )}
+          {serverData.list.map((rent, i) => (
+            <tr key={rent.rentCode}>
+              <td>
+                <img src={rent.bookCover} alt={rent.bookName} style={{ width: 40, marginRight: 8, verticalAlign: 'middle' }} />
+                {rent.bookName}
+              </td>
+              <td>{rent.rentDate ? rent.rentDate : '-'}</td>
+              <td>{rent.dueDate ? rent.dueDate : '-'}</td>
+              <td>
+                {rent.rentStatus === 'REQUESTED' && <span className="text-gray">대여요청</span>}
+                {rent.rentStatus === 'REJECTED' && <span className="text-red">거절</span>}
+                {rent.rentStatus === 'RETURNED' && <span className="text-green">반납완료</span>}
+                {rent.rentStatus === 'RENTED' && <span className="text-green">대여중</span>}
               </td>
             </tr>
           ))}
@@ -136,4 +136,4 @@ const RentalList = () => {
   )
 }
 
-export default RentalList
+export default RentalSearch

@@ -29,7 +29,7 @@ const BreadCrumb = () => {
   return (
     <Menu>
       <NavLink
-        to={'list'}
+        to={'search'}
         className={({ isActive }) => (isActive ? 'on' : undefined)}
       >
         📄 대여목록

@@ -119,7 +119,7 @@ const Login = () => {
     <>
       <Container>
         <Title>🔐 회원 로그인</Title>
-        <Form>
+        <Form as="form" onSubmit={e => { e.preventDefault(); handleClickLogin(); }}>
           <FormGroup>
             <label>이메일</label>
             <input
@@ -140,7 +140,7 @@ const Login = () => {
               placeholder="비밀번호를 입력하세요"
             />
           </FormGroup>
-          <button onClick={handleClickLogin}>로그인</button>
+          <button type="submit">로그인</button>
           <ActionLinks>
             <Link to={''}>비밀번호 찾기</Link>
             <Link to={''}>회원가입</Link>

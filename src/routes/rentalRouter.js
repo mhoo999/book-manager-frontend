@@ -1,7 +1,7 @@
 import { lazy } from 'react'
 import { Navigate } from 'react-router-dom'
 
-const RentalList = lazy(() => import('../pages/rental/RentalList'))
+const RentalSearch = lazy(() => import('../pages/rental/RentalSearch'))
 const OverdueList = lazy(() => import('../pages/rental/OverdueList'))
 const OverDetail = lazy(() => import('../pages/rental/OverDetail'))
 
@@ -9,11 +9,11 @@ const rentalRouter = () => {
   return [
     {
       path: '',
-      element: <Navigate to={'list'} replace />,
+      element: <Navigate to={'search'} replace />,
     },
     {
-      path: 'list',
-      element: <RentalList />,
+      path: 'search',
+      element: <RentalSearch />,
     },
     {
       path: 'over',
