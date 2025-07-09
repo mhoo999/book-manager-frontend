@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import useCustomMove from '../../hooks/useCustomMove'
 import Pagination from '../../components/common/Pagination'
 import { fetchRents } from '../../api/books/bookApi'
-import { useSearchParams, useNavigate, NavLink, useLocation } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 
 const RentalContainer = styled.div`
   margin-top: 2rem;
@@ -78,33 +78,6 @@ const RENT_STATUS_OPTIONS = [
   { value: 'OVERDUE', label: '미납' },
 ]
 
-// 대여목록/미납도서 탭 네비게이션
-const RentalTabs = () => {
-  const location = useLocation()
-  // 미납도서 탭 활성화: /rental/over 또는 /rental/search?rentStatus=OVERDUE
-  const isOverdueActive =
-    location.pathname === '/rental/over' ||
-    (location.pathname === '/rental/search' && location.search.includes('rentStatus=OVERDUE'))
-
-  return (
-    <article className="tab-nav">
-      <NavLink
-        to="/rental/search"
-        className={({ isActive }) => isActive && !isOverdueActive ? 'on' : ''}
-        end
-      >
-        📄 대여목록
-      </NavLink>
-      <NavLink
-        to="/rental/over"
-        className={() => isOverdueActive ? 'on' : ''}
-      >
-        ⏰ 미납도서
-      </NavLink>
-    </article>
-  )
-}
-
 const RentalSearch = () => {
   const { moveToList, page, size } = useCustomMove()
   const [serverData, setServerData] = useState({ list: [] })
@@ -128,7 +101,6 @@ const RentalSearch = () => {
   }
   return (
     <RentalContainer>
-      <RentalTabs />
       <FilterBox>
         <select value={rentStatus} onChange={e => setRentStatus(e.target.value)}>
           {RENT_STATUS_OPTIONS.map(opt => (
