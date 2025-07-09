@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-
+import jwtAxios from '../../util/jwtUtil'
+import { Navigate, useNavigate } from 'react-router-dom'
 const MyInfoContainer = styled.div`
   max-width: 1280px;
   margin: 0 auto;
@@ -65,36 +67,122 @@ const Button = styled.button`
 `
 
 const MyInfo = () => {
+  const navigate = useNavigate()
+
+  const [userInfo, setUserInfo] = useState({
+    name: '',
+    email: '',
+    phoneNo: '',
+  })
+
+  useEffect(() => {
+    const fetchMyInfo = async () => {
+      try {
+        const response = await jwtAxios.get('/api/user/me')
+        const data = response.data.data
+        console.log(data)
+        setUserInfo({
+          name: data.name,
+          email: data.email,
+          phoneNo: data.phoneNo,
+        })
+      } catch (error) {
+        console.error(error)
+      }
+      console.log('after setUserInfo:', userInfo)
+    }
+    fetchMyInfo()
+  }, [])
+  //////비밀번호 변경////////////////
+  const [passwords, setPasswords] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  })
+  const handleChangePassword = async () => {
+    try {
+      if (passwords.newPassword !== passwords.confirmPassword) {
+        alert('새 비밀번호가 일치하지 않습니다.')
+        return
+      }
+
+      const response = await jwtAxios.put('/api/user/change-password', {
+        currentPassword: passwords.currentPassword,
+        newPassword: passwords.newPassword,
+        confirmPassword: passwords.confirmPassword,
+      })
+
+      console.log('비밀번호 변경 완료:', response)
+      alert('비밀번호가 성공적으로 변경되었습니다.')
+      navigate('/mypage/dash') // ✅ 원하는 페이지로 이동!
+    } catch (error) {
+      console.error(error)
+      alert('비밀번호 변경 실패!')
+    }
+  }
+  //// 회원 탈퇴 라우팅
+
+  const handleDeleteAccount = () => {
+    // 정말 회원탈퇴 API 요청이 있다면 먼저 처리!
+    // await api.deleteAccount()
+
+    // 탈퇴 후 이동
+    navigate('/mypage/withdraw') // 원하는 경로
+  }
+
   return (
     <MyInfoContainer>
       <FormBox>
         <Grid>
           <div>
             <Label>이름</Label>
-            <Input type="text" value="홍길동" disabled />
+            <Input type="text" value={userInfo.name} disabled />
           </div>
           <div>
             <Label>이메일</Label>
-            <Input type="email" value="hong123@example.com" />
+            <Input type="email" value={userInfo.email} disabled />
           </div>
           <div>
             <Label>연락처</Label>
-            <Input type="text" value="010-1234-5678" />
+            <Input type="text" value={userInfo.phoneNo} disabled />
           </div>
         </Grid>
 
         <div style={{ marginTop: '32px' }}>
           <SectionTitle>🔐 비밀번호 변경</SectionTitle>
           <Grid>
-            <Input type="password" placeholder="현재 비밀번호" />
-            <Input type="password" placeholder="새 비밀번호" />
-            <Input type="password" placeholder="새 비밀번호 확인" />
+            <Input
+              type="password"
+              placeholder="현재 비밀번호"
+              value={passwords.currentPassword}
+              onChange={(e) =>
+                setPasswords({ ...passwords, currentPassword: e.target.value })
+              }
+            />
+            <Input
+              type="password"
+              placeholder="새 비밀번호"
+              value={passwords.newPassword}
+              onChange={(e) =>
+                setPasswords({ ...passwords, newPassword: e.target.value })
+              }
+            />
+            <Input
+              type="password"
+              placeholder="새 비밀번호 확인"
+              value={passwords.confirmPassword}
+              onChange={(e) =>
+                setPasswords({ ...passwords, confirmPassword: e.target.value })
+              }
+            />
           </Grid>
         </div>
 
         <ButtonRow>
-          <Button>수정하기</Button>
-          <Button secondary>회원탈퇴</Button>
+          <Button onClick={handleChangePassword}>수정하기</Button>
+          <Button secondary onClick={handleDeleteAccount}>
+            회원탈퇴
+          </Button>
         </ButtonRow>
       </FormBox>
     </MyInfoContainer>
