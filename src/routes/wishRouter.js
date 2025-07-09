@@ -9,10 +9,6 @@ const wishRouter = () => {
   return [
     {
       path: '',
-      element: <Navigate to={'list'} replace />,
-    },
-    {
-      path: 'list',
       element: <WishList />,
     },
     {

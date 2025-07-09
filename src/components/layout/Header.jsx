@@ -148,7 +148,7 @@ const Header = () => {
               <li>
                 <NavLink to={'/wish'} className={({isActive}) => isActive ? 'on' : undefined}>희망도서</NavLink>
                 <ol className="lnb">
-                  <li><Link to={'/wish/list'}>신청목록</Link></li>
+                  <li><Link to={'/wish'}>신청목록</Link></li>
                   <li><Link to={'/wish/apply'}>도서신청</Link></li>
                 </ol>
               </li>

@@ -1,9 +1,10 @@
 import styled from 'styled-components'
-import useCustomLogin from '../../hooks/useCustomLogin'
 import { useEffect, useState } from 'react'
+import { wishList } from '../../api/wish/wishApi'
 import useCustomMove from '../../hooks/useCustomMove'
 import Pagination from '../../components/common/Pagination'
 import { Link } from 'react-router-dom'
+import NoContent from '../../components/common/NoContent'
 
 const WishContainer = styled.div`
   max-width: 1280px;
@@ -51,16 +52,63 @@ const Table = styled.table`
   }
 `
 
+const StatusLabel = styled.span`
+  font-weight: bold;
+  color: ${(props) => {
+    switch (props.status) {
+      case 1:
+        return '#2563eb'; // 검토중
+      case 2:
+        return 'green';   // 승인됨
+      case 3:
+        return '#ca8a04'; // 구매중
+      case 4:
+        return '#7c3aed'; // 입고완료
+      case 0:
+        return '#dc2626'; // 반려됨
+      default:
+        return '#000';    // fallback
+    }
+  }};
+`
+
+const WishItem = ({
+  wishId,
+  dueDate,
+  status,
+  statusLabel,
+  bookName,
+  author,
+  publisher,
+}) => {
+  return (
+    <tr>
+      <td>{dueDate.slice(0, 10)}</td>
+      <td>
+        <Link to={`${wishId}`}>{bookName}</Link>
+      </td>
+      <td>{author}</td>
+      <td>{publisher}</td>
+      <td>
+        <StatusLabel status={status}>{statusLabel}</StatusLabel>{' '}
+        {status === 1 && <button>취소</button>}
+      </td>
+    </tr>
+  )
+}
+
 const WishList = () => {
   const { moveToList } = useCustomMove()
   const [serverData, setServerData] = useState({ list: [] })
 
   useEffect(() => {
-    //여기에서 비동기로 데이터를 받아올 수 있도록 코드를 작성해 주세요
+    wishList().then((data) => {
+      setServerData(data)
+    })
   }, [])
 
-  if (!serverData.list || serverData.list.length < 1) {
-    return <h2>대여 데이터가 없습니다.</h2>
+  if (!serverData.wishes || serverData.wishes.length < 1) {
+    return <NoContent msg={`등록된 희망도서신청이 없습니다.`} />
   }
 
   return (
@@ -77,56 +125,18 @@ const WishList = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>2025-06-15</td>
-              <td>
-                <Link to={'../1'}>어린왕자와 철학자들</Link>
-              </td>
-              <td>김철수</td>
-              <td>인문출판사</td>
-              <td>
-                <span style={{ color: '#2563eb', fontWeight: 'bold' }}>
-                  검토중
-                </span>{' '}
-                <button>취소</button>
-              </td>
-            </tr>
-            <tr>
-              <td>2025-06-14</td>
-              <td>
-                <Link to={'../1'}>과학으로 읽는 어린왕자</Link>
-              </td>
-              <td>박지현</td>
-              <td>지식너머</td>
-              <td style={{ color: 'green', fontWeight: 'bold' }}>승인됨</td>
-            </tr>
-            <tr>
-              <td>2025-06-12</td>
-              <td>
-                <Link to={'../1'}>어린왕자 다시 읽기</Link>
-              </td>
-              <td>이민호</td>
-              <td>문학나무</td>
-              <td style={{ color: '#ca8a04', fontWeight: 'bold' }}>구매중</td>
-            </tr>
-            <tr>
-              <td>2025-06-10</td>
-              <td>
-                <Link to={'../1'}>어린왕자 해설서</Link>
-              </td>
-              <td>최윤정</td>
-              <td>책읽는세상</td>
-              <td style={{ color: '#7c3aed', fontWeight: 'bold' }}>입고완료</td>
-            </tr>
-            <tr>
-              <td>2025-06-08</td>
-              <td>
-                <Link to={'../1'}>어린왕자와 인간관계</Link>
-              </td>
-              <td>정하늘</td>
-              <td>힐링북스</td>
-              <td style={{ color: '#dc2626', fontWeight: 'bold' }}>반려됨</td>
-            </tr>
+            {serverData.wishes.map((w, idx) => (
+              <WishItem
+                wishId={w.wishId}
+                dueDate={w.dueDate}
+                status={w.status}
+                statusLabel={w.statusLabel}
+                bookName={w.bookName}
+                author={w.author}
+                publisher={w.publisher}
+                key={w.wishId}
+              />
+            ))}
           </tbody>
         </Table>
       </TableWrapper>
