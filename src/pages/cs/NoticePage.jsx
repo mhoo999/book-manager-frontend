@@ -54,6 +54,7 @@ const NoticeItem = ({
   content,
   createdAt,
   type,
+  typeLabel,
   adminId,
 }) => {
   return (
@@ -63,7 +64,7 @@ const NoticeItem = ({
         <Link to={`${noticeId}`}>{title}</Link>
       </td>
       <td>{adminId && '관리자'}</td>
-      <td>{type && '일반'}</td>
+      <td>{typeLabel}</td>
       <td>{createdAt.slice(0, 10)}</td>
     </tr>
   )
@@ -103,7 +104,7 @@ const NoticePage = () => {
                 title={n.title}
                 content={n.content}
                 createdAt={n.createdAt}
-                type={n.type}
+                typeLabel={n.typeLabel}
                 adminId={n.adminId}
                 key={n.noticeId}
                 num={idx + 1}
