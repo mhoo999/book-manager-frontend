@@ -14,26 +14,50 @@ const NoticeContainer = styled.article`
 
     > li {
       font-size: 14px;
+
       &:hover {
         text-decoration: underline;
       }
 
-      span {
-        margin-left: 16px;
+      a {
+        display: flex;               /* 핵심 */
+        justify-content: space-between; /* 좌우 정렬 */
+        align-items: center;
+
+        span#label {
+          margin-right: 8px;
+          color: gray;
+        }
+
+        span#createdAt {
+          color: gray;
+          flex-shrink: 0;
+        }
+
+        .left-content {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
       }
     }
   }
-`
-const NoticeItem = ({ noticeId, title, createdAt }) => {
+`;
+
+const NoticeItem = ({ noticeId, typeLabel, title, createdAt }) => {
   return (
     <li>
       <Link to={`cs/notice/${noticeId}`}>
-        {title}
-        <span className="text-gray">{createdAt}</span>
+        <span className="left-content">
+          <span id="label">{`[${typeLabel}]`}</span>
+          {title}
+        </span>
+        <span id="createdAt">{createdAt}</span>
       </Link>
     </li>
-  )
-}
+  );
+};
+
 
 const Notice = () => {
   const [notices, setNotices] = useState([])
@@ -63,6 +87,7 @@ const Notice = () => {
           <NoticeItem
             key={n.noticeId}
             noticeId={n.noticeId}
+            typeLabel={n.typeLabel}
             title={n.title}
             createdAt={n.createdAt.slice(0, 10)}
           />

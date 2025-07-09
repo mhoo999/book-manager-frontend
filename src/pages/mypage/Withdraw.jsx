@@ -4,6 +4,7 @@ import jwtAxios from '../../util/jwtUtil'
 import { useDispatch } from 'react-redux'
 import { logout } from '../../slices/loginSlice'
 
+
 const WithdrawContainer = styled.div`
   max-width: 1280px;
   margin: 0 auto;
@@ -69,6 +70,7 @@ const Withdraw = () => {
       alert('회원 탈퇴에 실패했습니다.')
     }
   }
+
   return (
     <WithdrawContainer>
       <Box>
@@ -101,6 +103,7 @@ const Withdraw = () => {
         </div>
         <ButtonGroup>
           <button onClick={handleWithdraw}>탈퇴하기</button>
+
         </ButtonGroup>
       </Box>
     </WithdrawContainer>

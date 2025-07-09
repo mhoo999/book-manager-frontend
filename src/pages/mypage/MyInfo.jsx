@@ -1,7 +1,9 @@
+
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import jwtAxios from '../../util/jwtUtil'
 import { Navigate, useNavigate } from 'react-router-dom'
+
 const MyInfoContainer = styled.div`
   max-width: 1280px;
   margin: 0 auto;
@@ -145,6 +147,7 @@ const MyInfo = () => {
           <div>
             <Label>연락처</Label>
             <Input type="text" value={userInfo.phoneNo} disabled />
+
           </div>
         </Grid>
 
@@ -183,6 +186,7 @@ const MyInfo = () => {
           <Button secondary onClick={handleDeleteAccount}>
             회원탈퇴
           </Button>
+
         </ButtonRow>
       </FormBox>
     </MyInfoContainer>
