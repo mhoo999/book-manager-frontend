@@ -76,17 +76,30 @@ const BackButton = styled.div`
 const QnaContent = () => {
   const navigate = useNavigate()
   const { questionId } = useParams()
-  const [question, setQuestion] = useState({})
-  const [reply, setReply] = useState({})
+  const [question, setQuestion] = useState(null)
+  const [reply, setReply] = useState(null)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     qnaCont(questionId).then((data) => {
-      // console.log('data=', data)
-      setQuestion(data.question)
-      setReply(data.reply)
+      if (!data || !data.question) {
+        setError('해당 문의를 불러올 수 없습니다. (권한 또는 존재하지 않음)')
+        setQuestion(null)
+        setReply(null)
+      } else {
+        setQuestion(data.question)
+        setReply(data.reply)
+        setError(null)
+      }
+    }).catch(() => {
+      setError('문의 정보를 불러오는 중 오류가 발생했습니다.')
+      setQuestion(null)
+      setReply(null)
     })
   }, [questionId])
 
+  if (error) return <h2>{error}</h2>
+  if (!question) return <h2>문의 정보를 불러오는 중입니다...</h2>
   if (!question.questionId) return <h2>해당 문의 없음</h2>
   return (
     <>

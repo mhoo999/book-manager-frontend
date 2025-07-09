@@ -29,7 +29,8 @@ const BreadCrumb = () => {
   return (
     <Menu>
       <NavLink
-        to={'list'}
+        to={''}
+        end
         className={({ isActive }) => (isActive ? 'on' : undefined)}
       >
         📝 신청목록

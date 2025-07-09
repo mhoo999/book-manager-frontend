@@ -39,12 +39,20 @@ const useCustomMove = () => {
         navigate(`/rental/search?${queryString}`)
       } else if (location.pathname.startsWith('/books')) {
         navigate(`/books/search?${queryString}`)
+      } else if (location.pathname.startsWith('/cs/qna')) {
+        navigate(`/cs/qna?${queryString}`)
+      } else if (location.pathname.startsWith('/cs/notice')) {
+        navigate(`/cs/notice?${queryString}`)
       }
     } else {
       if (location.pathname.startsWith('/rental')) {
         navigate(`/rental/search`)
       } else if (location.pathname.startsWith('/books')) {
         navigate(`/books/search`)
+      } else if (location.pathname.startsWith('/cs/qna')) {
+        navigate(`/cs/qna`)
+      } else if (location.pathname.startsWith('/cs/notice')) {
+        navigate(`/cs/notice`)
       }
     }
   }
