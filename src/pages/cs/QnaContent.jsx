@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import { questionCont } from '../../api/question/questionApi'
+import { qnaCont } from '../../api/qna/qnaApi'
 import { useEffect, useState } from 'react'
 
 const QuestionBox = styled.div`
@@ -36,6 +36,26 @@ const QuestionCont = styled.div`
   color: #1f2937;
 `
 
+const ReplyBox = styled.div`
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+`
+
+const ReplyTitle = styled.h3`
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+`
+
+const ReplyCont = styled.div`
+  margin-top: 1.5rem;
+  line-height: 1.8;
+  color: #1f2937;
+`
+
 const BackButton = styled.div`
   margin-top: 2.5rem;
   text-align: center;
@@ -53,15 +73,17 @@ const BackButton = styled.div`
   }
 `
 
-const QuestionContent = () => {
+const QnaContent = () => {
   const navigate = useNavigate()
   const { questionId } = useParams()
   const [question, setQuestion] = useState({})
+  const [reply, setReply] = useState({})
 
   useEffect(() => {
-    questionCont(questionId).then((data) => {
+    qnaCont(questionId).then((data) => {
       // console.log('data=', data)
-      setQuestion(data)
+      setQuestion(data.question)
+      setReply(data.reply)
     })
   }, [questionId])
 
@@ -84,6 +106,15 @@ const QuestionContent = () => {
         <QuestionCont>{question.content}</QuestionCont>
       </QuestionBox>
 
+      <br />
+
+      {reply &&
+        <ReplyBox>
+          <ReplyTitle>📌 관리자 답변</ReplyTitle>
+          <ReplyCont>{reply.content}</ReplyCont>
+        </ReplyBox>
+      }
+
       <BackButton>
         <span
           onClick={() => {
@@ -97,4 +128,4 @@ const QuestionContent = () => {
   )
 }
 
-export default QuestionContent
+export default QnaContent
