@@ -69,14 +69,21 @@ const QuestionItem = ({
 }
 
 const QnaPage = () => {
-  const { moveToList } = useCustomMove()
-  const [serverData, setServerData] = useState({})
+  const { moveToList, page, size } = useCustomMove()
+  const [serverData, setServerData] = useState({ questions: [] })
 
   useEffect(() => {
-    questionList().then((data) => {
-      setServerData(data)
+    questionList({ page: page - 1, size }).then((data) => {
+      setServerData({
+        ...data,
+        page: (data.page ?? 0) + 1, // 0부터 시작하므로 1부터 시작하도록 변환
+        size: data.size,
+        totalCount: data.totalCount,
+        totalPages: data.totalPages,
+        questions: data.questions || [],
+      })
     })
-  }, [])
+  }, [page, size])
 
   if (!serverData.questions || serverData.questions.length < 1) {
     return <NoContent msg={`등록된 문의가 없습니다.`} />
@@ -104,7 +111,7 @@ const QnaPage = () => {
                 questionType={q.questionType}
                 userName={q.userName}
                 key={q.questionId}
-                num={idx + 1}
+                num={idx + 1 + (serverData.page - 1) * serverData.size}
               />
             ))}
           </Tbody>

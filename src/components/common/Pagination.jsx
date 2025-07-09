@@ -59,19 +59,19 @@ const Pagination = ({ serverData, movePage }) => {
       {pageNumList.map((pageNum, idx) => {
         const isActive = page === pageNum
         return (
-          <button
-            type="button"
-            onClick={() => movePage({ page: pageNum, size })}
-            key={idx}
-            style={{
+        <button
+          type="button"
+          onClick={() => movePage({ page: pageNum, size })}
+          key={idx}
+          style={{
               backgroundColor: isActive ? '#3f82ff' : 'white',
               color: isActive ? 'white' : 'black',
               fontWeight: isActive ? 'bold' : 'normal',
               border: isActive ? '1.5px solid #3f82ff' : '1px solid #ddd',
-            }}
-          >
-            {pageNum}
-          </button>
+          }}
+        >
+          {pageNum}
+        </button>
         )
       })}
 
