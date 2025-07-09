@@ -71,14 +71,21 @@ const NoticeItem = ({
 }
 
 const NoticePage = () => {
-  const { moveToList } = useCustomMove()
-  const [serverData, setServerData] = useState({})
+  const { moveToList, page, size } = useCustomMove()
+  const [serverData, setServerData] = useState({ notices: [] })
 
   useEffect(() => {
-    noticeList().then((data) => {
-      setServerData(data)
+    noticeList({ page: page - 1, size }).then((data) => {
+      setServerData({
+        ...data,
+        page: (data.page ?? 0) + 1, // 0부터 시작하므로 1부터 시작하도록 변환
+        size: data.size,
+        totalCount: data.totalCount,
+        totalPages: data.totalPages,
+        notices: data.notices || [],
+      })
     })
-  }, [])
+  }, [page, size])
 
   if (!serverData.notices || serverData.notices.length < 1) {
     return <NoContent msg={`등록된 공지사항이 없습니다.`} />
@@ -107,7 +114,7 @@ const NoticePage = () => {
                 typeLabel={n.typeLabel}
                 adminId={n.adminId}
                 key={n.noticeId}
-                num={idx + 1}
+                num={idx + 1 + (serverData.page - 1) * serverData.size}
               />
             ))}
           </Tbody>

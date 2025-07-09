@@ -98,14 +98,21 @@ const WishItem = ({
 }
 
 const WishList = () => {
-  const { moveToList } = useCustomMove()
-  const [serverData, setServerData] = useState({ list: [] })
+  const { moveToList, page, size } = useCustomMove()
+  const [serverData, setServerData] = useState({ wishes: [] })
 
   useEffect(() => {
-    wishList().then((data) => {
-      setServerData(data)
+    wishList({ page: page - 1, size }).then((data) => {
+      setServerData({
+        ...data,
+        page: (data.page ?? 0) + 1, // 0부터 시작하므로 1부터 시작하도록 변환
+        size: data.size,
+        totalCount: data.totalCount,
+        totalPages: data.totalPages,
+        wishes: data.wishes || [],
+      })
     })
-  }, [])
+  }, [page, size])
 
   if (!serverData.wishes || serverData.wishes.length < 1) {
     return <NoContent msg={`등록된 희망도서신청이 없습니다.`} />
