@@ -17,6 +17,11 @@ export const loginPostAsync = createAsyncThunk('loginPostAsync', (param) => {
 const loadMemberStorage = () => {
   const memberInfo = getStorage('member')
 
+  //로그인 후 주소창 새로고침 해도 로그인유지
+  if (memberInfo && memberInfo.name) {
+    memberInfo.email = decodeURIComponent(memberInfo.name)
+  }
+
   return memberInfo
 }
 

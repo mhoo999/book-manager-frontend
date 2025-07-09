@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: 'http://localhost:8080',
   withCredentials: true,
 })
 
@@ -22,7 +22,7 @@ api.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
 
-      const res = await axios.post(
+      const res = await api.post(
         '/api/auth/refresh',
         {},
         { withCredentials: true },

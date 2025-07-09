@@ -1,5 +1,10 @@
 import styled from 'styled-components'
 
+import { Link } from 'react-router-dom'
+import jwtAxios from '../../util/jwtUtil'
+import { useEffect, useState } from 'react'
+
+
 const DashContainer = styled.div`
   max-width: 1280px;
   margin: 0 auto;
@@ -113,20 +118,57 @@ const SearchBox = styled(NoticeBox)`
 `
 
 const DashBoard = () => {
+
+  const [rentalCount, setRentalCount] = useState(0)
+  const [overDueCount, setOverDueCount] = useState(0)
+
+  useEffect(() => {
+    const fetchDashboardCounts = async () => {
+      try {
+        const response = await jwtAxios.get('/api/v1/rents/myRentals')
+        const data = response.data
+        console.log(data)
+        setRentalCount(data.checkedOutBooks)
+        setOverDueCount(data.overdueBooks)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchDashboardCounts()
+  }, [])
+
+  const [wishCount, setWishCount] = useState(0)
+
+  useEffect(() => {
+    const fetchWishCounts = async () => {
+      try {
+        const response = await jwtAxios.get('/api/wish/myWishes')
+        const data = response.data.data
+        console.log(data)
+        setWishCount(data.myWishesCount)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchWishCounts()
+  }, [])
+
+
   return (
     <DashContainer>
       <Grid>
         <Card>
           <h3>대여중인 도서</h3>
-          <p style={{ color: '#2563eb' }}>3권</p>
+          <p style={{ color: '#2563eb' }}>{rentalCount}권</p>
         </Card>
         <Card>
           <h3>미납 도서</h3>
-          <p style={{ color: '#ef4444' }}>1권</p>
+          <p style={{ color: '#ef4444' }}>{overDueCount}권</p>
         </Card>
         <Card>
           <h3>희망도서 처리현황</h3>
-          <p style={{ color: '#10b981' }}>2건</p>
+          <p style={{ color: '#10b981' }}>{wishCount}건</p>
+
         </Card>
       </Grid>
 
@@ -136,7 +178,11 @@ const DashBoard = () => {
             src="https://cdn-icons-png.flaticon.com/512/2232/2232688.png"
             alt="도서검색"
           />
-          <h3>도서검색</h3>
+
+          <Link to="/books">
+            <h3>도서검색</h3>
+          </Link>
+
           <p>보유한 도서를 검색하고 대여 가능 여부를 확인해보세요.</p>
         </MenuCard>
         <MenuCard>
@@ -144,7 +190,11 @@ const DashBoard = () => {
             src="https://cdn-icons-png.flaticon.com/512/3050/3050525.png"
             alt="대여목록"
           />
-          <h3>대여목록</h3>
+
+          <Link to="/rental/list">
+            <h3>대여목록</h3>
+          </Link>
+
           <p>현재 대여 중인 도서 목록과 반납 일정을 확인하세요.</p>
         </MenuCard>
         <MenuCard>
@@ -152,7 +202,11 @@ const DashBoard = () => {
             src="https://cdn-icons-png.flaticon.com/512/1828/1828817.png"
             alt="희망도서신청"
           />
-          <h3>희망도서신청</h3>
+
+          <Link to="/wish/list">
+            <h3>희망도서신청</h3>
+          </Link>
+
           <p>읽고 싶은 도서를 요청하면 도서관에서 검토 후 반영합니다.</p>
         </MenuCard>
         <MenuCard>
@@ -160,7 +214,11 @@ const DashBoard = () => {
             src="https://cdn-icons-png.flaticon.com/512/709/709790.png"
             alt="도서문의"
           />
-          <h3>도서문의</h3>
+
+          <Link to="/cs/qna">
+            <h3>도서문의</h3>
+          </Link>
+
           <p>도서에 대한 궁금증이나 요청 사항을 등록해보세요.</p>
         </MenuCard>
         <MenuCard>
@@ -168,7 +226,11 @@ const DashBoard = () => {
             src="https://cdn-icons-png.flaticon.com/512/1827/1827361.png"
             alt="공지사항"
           />
-          <h3>공지사항</h3>
+
+          <Link to="/cs/notice">
+            <h3>공지사항</h3>
+          </Link>
+
           <p>도서관의 최신 소식 및 변경 사항을 확인할 수 있습니다.</p>
         </MenuCard>
         <MenuCard>
@@ -176,7 +238,11 @@ const DashBoard = () => {
             src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
             alt="내정보"
           />
-          <h3>내정보</h3>
+
+          <Link to="/mypage/info">
+            <h3>내정보</h3>
+          </Link>
+
           <p>회원정보를 확인하고 비밀번호 등을 변경할 수 있습니다.</p>
         </MenuCard>
       </Grid>
