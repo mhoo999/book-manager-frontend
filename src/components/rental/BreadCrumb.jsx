@@ -25,7 +25,23 @@ const Menu = styled.article`
   }
 `
 
-// BreadCrumb에서 탭 네비게이션 완전 제거
-const BreadCrumb = () => null
+const BreadCrumb = () => {
+  return (
+    <Menu>
+      <NavLink
+        to={'search'}
+        className={({ isActive }) => (isActive ? 'on' : undefined)}
+      >
+        📄 대여목록
+      </NavLink>
+      <NavLink
+        to={'over'}
+        className={({ isActive }) => (isActive ? 'on' : undefined)}
+      >
+        ⏰ 미납도서
+      </NavLink>
+    </Menu>
+  )
+}
 
 export default BreadCrumb
