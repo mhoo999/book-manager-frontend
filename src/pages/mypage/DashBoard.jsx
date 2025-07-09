@@ -124,13 +124,30 @@ const DashBoard = () => {
       try {
         const response = await jwtAxios.get('/api/v1/rents/myRentals')
         const data = response.data
-        setRentalCount(data.totalRentCount)
-        setOverDueCount(data.overdueRentCount)
+        console.log(data)
+        setRentalCount(data.checkedOutBooks)
+        setOverDueCount(data.overdueBooks)
       } catch (error) {
         console.error(error)
       }
     }
     fetchDashboardCounts()
+  }, [])
+
+  const [wishCount, setWishCount] = useState(0)
+
+  useEffect(() => {
+    const fetchWishCounts = async () => {
+      try {
+        const response = await jwtAxios.get('/api/wish/myWishes')
+        const data = response.data.data
+        console.log(data)
+        setWishCount(data.myWishesCount)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchWishCounts()
   }, [])
 
   return (
@@ -146,7 +163,7 @@ const DashBoard = () => {
         </Card>
         <Card>
           <h3>희망도서 처리현황</h3>
-          <p style={{ color: '#10b981' }}>2건</p>
+          <p style={{ color: '#10b981' }}>{wishCount}건</p>
         </Card>
       </Grid>
 
