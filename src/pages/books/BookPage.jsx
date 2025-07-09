@@ -8,6 +8,7 @@ import {
 import { bookInfo, rentRegister } from '../../api/books/bookApi'
 import styled from 'styled-components'
 import Loading from '../Loading'
+import useCustomLogin from '../../hooks/useCustomLogin'
 
 const SectionTitle = styled.h2`
   font-size: 1.5rem;
@@ -138,12 +139,14 @@ const CenterButton = styled.div`
 const BookPage = () => {
   const { bookId } = useParams()
   const navigate = useNavigate()
+  const location = useLocation()
 
   const [searchParam, setSearchParam] = useSearchParams()
   const page = searchParam.get('page') ? parseInt(searchParam.get('page')) : 1
   const size = searchParam.get('size') ? parseInt(searchParam.get('size')) : 10
 
   const [book, setBook] = useState({})
+  const { isLogin, moveToLogin } = useCustomLogin()
 
   useEffect(() => {
     //서버요청
@@ -158,10 +161,15 @@ const BookPage = () => {
   if (!book || !book.title) return <Loading />
 
   // book.books 중 대여 가능 여부 계산
-  const isAnyBookAvailable = Array.isArray(book.books) && book.books.some((b) => b.status === 'AVAILABLE')
+  const isAnyBookAvailable = Array.isArray(book.books) && book.books.some((b) => b.status === 'AVAILABLE' || b.status === 'RENTABLE')
 
   // 대여신청 핸들러
   const handleRent = async (bookCode) => {
+    if (!isLogin) {
+      alert('로그인이 필요합니다.')
+      moveToLogin({ returnUrl: location.pathname + location.search })
+      return
+    }
     const result = await rentRegister(bookCode)
     if (result && !result.error) {
       alert('대여신청이 완료되었습니다.')
@@ -222,32 +230,35 @@ const BookPage = () => {
             </tr>
           </thead>
           <tbody>
-            {book.books.map((b, idx) => (
-              <tr key={b.bookCode}>
-                <td>{idx + 1}</td>
-                <td>{b.bookCode}</td>
-                <td>{b.location}</td>
-                <td className="rentable">
-                  {b.status === 'AVAILABLE'
-                    ? '대여가능'
-                    : b.status === 'RENTED'
-                      ? '대여중'
-                      : '대여불가'}
-                </td>
-                <td>
-                  <span
-                    className="btn"
-                    style={{
-                      opacity: b.status === 'AVAILABLE' ? 1 : 0.5,
-                      pointerEvents: b.status === 'AVAILABLE' ? 'auto' : 'none',
-                    }}
-                    onClick={() => b.status === 'AVAILABLE' && handleRent(b.bookCode)}
-                  >
-                    대여신청
-                  </span>
-                </td>
-              </tr>
-            ))}
+            {book.books.map((b, idx) => {
+              const isRentable = b.status === 'AVAILABLE' || b.status === 'RENTABLE'
+              return (
+                <tr key={b.bookCode}>
+                  <td>{idx + 1}</td>
+                  <td>{b.bookCode}</td>
+                  <td>{b.location}</td>
+                  <td className="rentable">
+                    {(b.status === 'AVAILABLE' || b.status === 'RENTABLE')
+                      ? '대여가능'
+                      : b.status === 'RENTED'
+                        ? '대여중'
+                        : '대여불가'}
+                  </td>
+                  <td>
+                    <span
+                      className="btn"
+                      style={{
+                        opacity: isRentable ? 1 : 0.5,
+                        pointerEvents: isRentable ? 'auto' : 'none',
+                      }}
+                      onClick={() => isRentable && handleRent(b.bookCode)}
+                    >
+                      대여신청
+                    </span>
+                  </td>
+                </tr>
+              )
+            })}
           </tbody>
         </table>
       </BookTableSection>
