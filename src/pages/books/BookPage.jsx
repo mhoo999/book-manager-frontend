@@ -173,7 +173,10 @@ const BookPage = () => {
     const result = await rentRegister(bookCode)
     if (result && !result.error) {
       alert('대여신청이 완료되었습니다.')
-      // 필요시 상태 갱신
+      // 대여신청 성공 시 도서 상세정보를 다시 불러와서 버튼 상태 갱신
+      bookInfo(bookId).then((res) => {
+        setBook(res)
+      })
     } else {
       alert(result.error || '대여신청에 실패했습니다.')
     }

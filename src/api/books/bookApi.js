@@ -64,13 +64,13 @@ export const searchBook = async (obj) => {
 // 📌 도서 대여신청 (인증 필요)
 export const rentRegister = async (bookCode) => {
   try {
-    const res = await jwtAxios.post(`${API_SERVER_HOST}/api/v1/rent/register`, {
+    const res = await jwtAxios.post(`${API_SERVER_HOST}/api/v1/rents/register`, {
       bookCode,
     })
     return res.data
   } catch (err) {
     console.error('rentRegister error:', err)
-    return { error: '대여신청 실패' }
+    return { error: err.response?.data?.error || '대여신청 실패' }
   }
 }
 
