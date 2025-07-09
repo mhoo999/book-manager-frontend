@@ -1,27 +1,26 @@
 import { lazy } from 'react'
 import { Navigate } from 'react-router-dom'
 
-const RentalList = lazy(() => import('../pages/rental/RentalList'))
-const OverdueList = lazy(() => import('../pages/rental/OverdueList'))
-const OverDetail = lazy(() => import('../pages/rental/OverDetail'))
+const RentalSearch = lazy(() => import('../pages/rental/RentalSearch'))
+// OverdueList, OverDetail import 제거
 
 const rentalRouter = () => {
   return [
     {
       path: '',
-      element: <Navigate to={'list'} replace />,
+      element: <Navigate to={'search'} replace />,
     },
     {
-      path: 'list',
-      element: <RentalList />,
+      path: 'search',
+      element: <RentalSearch />,
     },
     {
       path: 'over',
-      element: <OverdueList />,
+      element: <Navigate to={'/rental/search?rentStatus=OVERDUE'} replace />,
     },
     {
-      path: ':overdueId',
-      element: <OverDetail />,
+      path: 'over/:overdueId',
+      element: <Navigate to={'/rental/search?rentStatus=OVERDUE'} replace />,
     },
   ]
 }

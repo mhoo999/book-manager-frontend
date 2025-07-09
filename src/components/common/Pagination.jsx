@@ -8,34 +8,25 @@ const Container = styled.div`
 
   button {
     padding: 8px 14px;
-    background-color: white;
     border: 1px solid #ddd;
     border-radius: 6px;
     font-size: 0.875rem;
     cursor: pointer;
-
-    &:first-child {
-      color: white !important;
-      font-weight: bold;
-      background-color: #3b82f6;
-    }
-
-    &:hover {
-      color: white !important;
-      background-color: #3b82f6;
-    }
+    /* 배경, 폰트색은 인라인 스타일로만 제어 */
+    background-color: unset;
+    color: unset;
+    font-weight: unset;
+    /* &:first-child, &:hover에서 color, background-color를 제어하지 않음 */
   }
 `
 
 const Pagination = ({ serverData, movePage }) => {
-  // console.log('serverData=', serverData)
   let { page, size, totalCount, totalPages } = serverData
 
   let endPage = Math.ceil((page + 1) / 10) * 10 // 페이지네이션 끝번호
   const startPage = endPage - 10 + 1 // 페이지네이션 시작번호
   const realEndPage = Math.ceil(totalCount / size)
 
-  // 페이지네이션 끝번호 재계산
   if (realEndPage < endPage) {
     endPage = realEndPage
   }
@@ -65,18 +56,24 @@ const Pagination = ({ serverData, movePage }) => {
         ''
       )}
 
-      {pageNumList.map((pageNum, idx) => (
-        <button
-          type="button"
-          onClick={() => movePage({ page: pageNum, size })}
-          key={idx}
-          style={{
-            color: `${page + 1 === pageNum ? 'red' : 'black'}`,
-          }}
-        >
-          {pageNum}
-        </button>
-      ))}
+      {pageNumList.map((pageNum, idx) => {
+        const isActive = page === pageNum
+        return (
+          <button
+            type="button"
+            onClick={() => movePage({ page: pageNum, size })}
+            key={idx}
+            style={{
+              backgroundColor: isActive ? '#3f82ff' : 'white',
+              color: isActive ? 'white' : 'black',
+              fontWeight: isActive ? 'bold' : 'normal',
+              border: isActive ? '1.5px solid #3f82ff' : '1px solid #ddd',
+            }}
+          >
+            {pageNum}
+          </button>
+        )
+      })}
 
       {next ? (
         <span

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import RentalList from './RentalList'
+import RentalSearch from './RentalSearch'
 import SearchForm from './SearchForm'
 import { useState } from 'react'
 import BreadCrumb from '../../components/rental/BreadCrumb'

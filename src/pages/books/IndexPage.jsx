@@ -1,6 +1,6 @@
-import { lazy } from 'react'
+import { lazy, useEffect } from 'react'
 import styled from 'styled-components'
-import { Outlet, useParams, useSearchParams } from 'react-router-dom'
+import { Outlet, useParams, useSearchParams, useNavigate } from 'react-router-dom'
 import LatestBooks from '../../components/books/LatestBooks'
 
 const SearchForm = lazy(() => import('./../../components/books/SearchForm'))
@@ -20,6 +20,13 @@ const SearchBook = () => {
   const { bookId } = useParams()
   const [searchParams] = useSearchParams()
   const keyword = searchParams.get('keyword')
+  const navigate = useNavigate()
+  // /books로 접근 시 /books/search로 리다이렉트
+  useEffect(() => {
+    if (!bookId && !keyword) {
+      navigate('search', { replace: true })
+    }
+  }, [bookId, keyword, navigate])
 
   let title = ''
   if (keyword) {

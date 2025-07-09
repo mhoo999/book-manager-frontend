@@ -136,12 +136,12 @@ const Header = () => {
                 <NavLink to={'/'} className={({isActive}) => isActive ? 'on' : undefined}>Home</NavLink>
               </li>
               <li>
-                <NavLink to={'/books'} className={({isActive}) => isActive ? 'on' : undefined}>도서검색</NavLink>
+                <NavLink to={'/books/search'} className={({isActive}) => isActive ? 'on' : undefined}>도서검색</NavLink>
               </li>
               <li>
                 <NavLink to={'/rental'} className={({isActive}) => isActive ? 'on' : undefined}>대여현황</NavLink>
                 <ol className="lnb">
-                  <li><Link to={'/rental/list'}>대여목록</Link></li>
+                  <li><Link to={'/rental/search'}>대여목록</Link></li>
                   <li><Link to={'/rental/over'}>미납도서</Link></li>
                 </ol>
               </li>
