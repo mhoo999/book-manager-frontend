@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink, useLocation, useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 
 const Menu = styled.article`
@@ -11,14 +11,14 @@ const Menu = styled.article`
     padding: 6px 0;
     border-radius: 4px;
     font-size: 14px;
-    font-weight: ${(props) => (props.active ? '600' : '400')};
-    background-color: ${(props) => (props.active ? '#2563eb' : 'transparent')};
-    color: ${(props) => (props.active ? '#fff' : '#000')};
+    font-weight: 400;
+    background-color: transparent;
+    color: #000;
     text-decoration: none;
     text-align: center;
 
-    &:hover,
     &.on {
+      font-weight: 600;
       background-color: #2563eb;
       color: white;
     }
@@ -26,17 +26,24 @@ const Menu = styled.article`
 `
 
 const BreadCrumb = () => {
+  const location = useLocation()
+  const [searchParams] = useSearchParams()
+  const isOverdue =
+    location.pathname.endsWith('/over') ||
+    (location.pathname.endsWith('/search') && searchParams.get('rentStatus') === 'OVERDUE')
+
   return (
     <Menu>
       <NavLink
-        to={'list'}
-        className={({ isActive }) => (isActive ? 'on' : undefined)}
+        to="search"
+        className={() => !isOverdue ? 'on' : ''}
+        end
       >
         📄 대여목록
       </NavLink>
       <NavLink
-        to={'over'}
-        className={({ isActive }) => (isActive ? 'on' : undefined)}
+        to="over"
+        className={() => isOverdue ? 'on' : ''}
       >
         ⏰ 미납도서
       </NavLink>

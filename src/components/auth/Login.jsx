@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import useInputs from '../../hooks/useInputs'
 import { useDispatch } from 'react-redux'
 import { login } from '../../slices/loginSlice'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import useCustomLogin from '../../hooks/useCustomLogin'
 import Modal from '../common/Modal'
 import { useRef, useState } from 'react'
@@ -87,6 +87,8 @@ const Login = () => {
   const [loginParam, onChange, reset] = useInputs(initState)
   const { doLogin, moveToPath } = useCustomLogin()
   const dispatch = useDispatch()
+  const location = useLocation()
+  const navigate = useNavigate()
 
   const { email, pw } = loginParam
 
@@ -102,8 +104,9 @@ const Login = () => {
         if (res.accessToken) {
           dispatch(login(res))
         }
-
-        moveToPath('/')
+        // 로그인 전 페이지로 이동
+        const returnUrl = location.state?.returnUrl || '/'
+        navigate(returnUrl, { replace: true })
       }
     })
   }
@@ -116,7 +119,7 @@ const Login = () => {
     <>
       <Container>
         <Title>🔐 회원 로그인</Title>
-        <Form>
+        <Form as="form" onSubmit={e => { e.preventDefault(); handleClickLogin(); }}>
           <FormGroup>
             <label>이메일</label>
             <input
@@ -137,7 +140,7 @@ const Login = () => {
               placeholder="비밀번호를 입력하세요"
             />
           </FormGroup>
-          <button onClick={handleClickLogin}>로그인</button>
+          <button type="submit">로그인</button>
           <ActionLinks>
             <Link to={''}>비밀번호 찾기</Link>
             <Link to={''}>회원가입</Link>

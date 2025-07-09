@@ -3,6 +3,7 @@ import {
   createSearchParams,
   useNavigate,
   useSearchParams,
+  useLocation,
 } from 'react-router-dom'
 
 const useCustomMove = () => {
@@ -19,12 +20,14 @@ const useCustomMove = () => {
   const queryDefault = createSearchParams({ page, size }).toString()
 
   const navigate = useNavigate()
+  const location = useLocation()
   let queryString = ''
 
   //현재페이지번호를 클릭해도 서버에 데이터를 요청하기 위한 상태변수
   const [refresh, setRefresh] = useState(false)
 
   const moveToList = (pageParam) => {
+    let queryString = ''
     if (pageParam) {
       const pageNum = getNum(pageParam.page, 1)
       const sizeNum = getNum(pageParam.size, 10)
@@ -32,12 +35,18 @@ const useCustomMove = () => {
         page: pageNum,
         size: sizeNum,
       }).toString()
+      if (location.pathname.startsWith('/rental')) {
+        navigate(`/rental/search?${queryString}`)
+      } else if (location.pathname.startsWith('/books')) {
+        navigate(`/books/search?${queryString}`)
+      }
     } else {
-      navigate({ pathname: '../search' })
-      //../search는 현재 경로에서 한 디렉터리 위로 올라간 다음 list로 이동하는 의미. 결과: /books/search
+      if (location.pathname.startsWith('/rental')) {
+        navigate(`/rental/search`)
+      } else if (location.pathname.startsWith('/books')) {
+        navigate(`/books/search`)
+      }
     }
-    setRefresh((prev) => !prev)
-    navigate({ pathname: '../search', search: queryString })
   }
 
   const moveToRead = (bookId) => {
