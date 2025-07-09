@@ -134,11 +134,11 @@ const SearchPage = () => {
 
   useEffect(() => {
     const realKeyword = keyword ?? ''
-    const params = { type: type ?? '', keyword: realKeyword }
+    const params = { type: type ?? '', keyword: realKeyword, page: page - 1, size }
     searchBook(params).then((data) => {
       setServerData({
         books: data.books || [],
-        page: data.page,
+        page: (data.page ?? 0) + 1, // 0부터 시작하므로 1부터 시작하도록 변환
         size: data.size,
         totalCount: data.totalCount,
         totalPages: data.totalPages,

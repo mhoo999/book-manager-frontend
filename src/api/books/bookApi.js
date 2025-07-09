@@ -44,12 +44,15 @@ export const searchBook = async (obj) => {
     return { books: [] }
   }
 
-  const key = obj.type
-  const value = obj.keyword
+  const { type, keyword, page, size } = obj
+  const params = { page, size }
+  if (type && keyword !== undefined) {
+    params[type] = keyword
+  }
 
   try {
     const res = await jwtAxios.get(`${uriBooks}/search`, {
-      params: { [key]: value },
+      params,
     })
     return res.data
   } catch (err) {

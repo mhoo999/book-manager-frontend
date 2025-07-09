@@ -136,7 +136,7 @@ const Header = () => {
                 <NavLink to={'/'} className={({isActive}) => isActive ? 'on' : undefined}>Home</NavLink>
               </li>
               <li>
-                <NavLink to={'/books'} className={({isActive}) => isActive ? 'on' : undefined}>도서검색</NavLink>
+                <NavLink to={'/books/search'} className={({isActive}) => isActive ? 'on' : undefined}>도서검색</NavLink>
               </li>
               <li>
                 <NavLink to={'/rental'} className={({isActive}) => isActive ? 'on' : undefined}>대여현황</NavLink>
