@@ -2,8 +2,7 @@ import { lazy } from 'react'
 import { Navigate } from 'react-router-dom'
 
 const RentalSearch = lazy(() => import('../pages/rental/RentalSearch'))
-const OverdueList = lazy(() => import('../pages/rental/OverdueList'))
-const OverDetail = lazy(() => import('../pages/rental/OverDetail'))
+// OverdueList, OverDetail import 제거
 
 const rentalRouter = () => {
   return [
@@ -17,11 +16,11 @@ const rentalRouter = () => {
     },
     {
       path: 'over',
-      element: <OverdueList />,
+      element: <Navigate to={'/rental/search?rentStatus=OVERDUE'} replace />,
     },
     {
-      path: ':overdueId',
-      element: <OverDetail />,
+      path: 'over/:overdueId',
+      element: <Navigate to={'/rental/search?rentStatus=OVERDUE'} replace />,
     },
   ]
 }

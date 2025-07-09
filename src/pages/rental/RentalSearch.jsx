@@ -81,7 +81,14 @@ const RENT_STATUS_OPTIONS = [
 const RentalSearch = () => {
   const { moveToList, page, size } = useCustomMove()
   const [serverData, setServerData] = useState({ list: [] })
-  const [rentStatus, setRentStatus] = useState('')
+  const [searchParams] = useSearchParams()
+  const [rentStatus, setRentStatus] = useState(() => searchParams.get('rentStatus') || '')
+
+  // 쿼리스트링 rentStatus가 바뀌면 상태도 동기화
+  useEffect(() => {
+    const param = searchParams.get('rentStatus') || ''
+    setRentStatus(param)
+  }, [searchParams])
 
   useEffect(() => {
     fetchRents({ page: page - 1, size, rentStatus }).then((data) => {
