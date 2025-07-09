@@ -1,4 +1,4 @@
-import { useLocation, useSearchParams } from 'react-router-dom'
+import { NavLink, useLocation, useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 
 const Menu = styled.article`
@@ -34,18 +34,19 @@ const BreadCrumb = () => {
 
   return (
     <Menu>
-      <a
-        href="/rental/search"
-        className={!isOverdue ? 'on' : ''}
+      <NavLink
+        to="/rental/search"
+        className={({ isActive }) => (!isOverdue && isActive ? 'on' : '')}
+        end
       >
         📄 대여목록
-      </a>
-      <a
-        href="/rental/over"
-        className={isOverdue ? 'on' : ''}
+      </NavLink>
+      <NavLink
+        to="/rental/over"
+        className={({ isActive }) => (isOverdue && isActive ? 'on' : '')}
       >
         ⏰ 미납도서
-      </a>
+      </NavLink>
     </Menu>
   )
 }
