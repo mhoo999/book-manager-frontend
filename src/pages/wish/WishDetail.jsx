@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import styled from 'styled-components'
+import { wishCont } from '../../api/wish/wishApi'
 
 const WishContainer = styled.div`
   background: white;
@@ -55,20 +56,38 @@ const ReturnBtn = styled.div`
   }
 `
 
+const StatusLabel = styled.p`
+  font-weight: 600;
+  color: ${(props) => {
+    switch (props.status) {
+      case 1:
+        return '#2563eb'; // 검토중
+      case 2:
+        return 'green';   // 승인됨
+      case 3:
+        return '#ca8a04'; // 구매중
+      case 4:
+        return '#7c3aed'; // 입고완료
+      case 0:
+        return '#dc2626'; // 반려됨
+      default:
+        return '#000';    // fallback
+    }
+  }};
+`
+
 const WishDetail = () => {
   const { wishId } = useParams()
-  const [wishData, setWishData] = useState({})
+  const [wish, setWish] = useState({})
   const navigate = useNavigate()
 
-  const [searchParam, setSearchParam] = useSearchParams()
-  const page = searchParam.get('page') ? parseInt(searchParam.get('page')) : 1
-  const size = searchParam.get('size') ? parseInt(searchParam.get('size')) : 10
-
   useEffect(() => {
-    //여기에서 비동기로 데이터를 받아올 수 있도록 코드를 작성해 주세요
+    wishCont(wishId).then((data) => {
+      setWish(data)
+    })
   }, [wishId])
 
-  if (!wishData) return <h2>희망도서에 대한 상세 데이터가 없습니다.</h2>
+  if (!wish) return <h2>희망도서신청 데이터가 없습니다.</h2>
 
   return (
     <WishContainer>
@@ -86,19 +105,19 @@ const WishDetail = () => {
           <TextGroup>
             <div>
               <p>도서명</p>
-              <p>어린왕자와 철학자들</p>
+              <p>{wish.bookName}</p>
             </div>
             <div>
               <p>저자</p>
-              <p>김철수</p>
+              <p>{wish.author}</p>
             </div>
             <div>
               <p>출판사</p>
-              <p>인문출판사</p>
+              <p>{wish.publisher}</p>
             </div>
             <div>
               <p>출판일</p>
-              <p>2024-11-10</p>
+              <p>{wish.publishDate && wish.publishDate.slice(0, 10)}</p>
             </div>
           </TextGroup>
         </Grid>
@@ -109,22 +128,22 @@ const WishDetail = () => {
         <TextGroup>
           <div>
             <p>이름</p>
-            <p>홍길동</p>
+            <p>{wish.userName}</p>
           </div>
           <div>
             <p>전화번호</p>
-            <p>010-1234-5678</p>
+            <p>{wish.userPhone}</p>
           </div>
           <div>
             <p>신청일</p>
-            <p>2025-06-15</p>
+            <p>{wish.dueDate}</p>
           </div>
         </TextGroup>
       </Section>
 
       <Section>
         <h3>처리상태</h3>
-        <p style={{ color: '#2563eb', fontWeight: '600' }}>검토중</p>
+        <StatusLabel status={wish.status}>{wish.statusLabel}</StatusLabel>
       </Section>
 
       <ReturnBtn>
