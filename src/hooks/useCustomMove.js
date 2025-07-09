@@ -43,6 +43,8 @@ const useCustomMove = () => {
         navigate(`/cs/qna?${queryString}`)
       } else if (location.pathname.startsWith('/cs/notice')) {
         navigate(`/cs/notice?${queryString}`)
+      } else if (location.pathname.startsWith('/wish')) {
+        navigate(`/wish?${queryString}`)
       }
     } else {
       if (location.pathname.startsWith('/rental')) {
@@ -53,6 +55,8 @@ const useCustomMove = () => {
         navigate(`/cs/qna`)
       } else if (location.pathname.startsWith('/cs/notice')) {
         navigate(`/cs/notice`)
+      } else if (location.pathname.startsWith('/wish')) {
+        navigate(`/wish`)
       }
     }
   }
